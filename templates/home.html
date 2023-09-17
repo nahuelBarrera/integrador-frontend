@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../styles/profile.css">
+</head>
+
+<body class="grid-container">
+    <header class="header">
+        <button type="button" class="menu-btn" onclick="animate_menu()"></button>
+        <img src="../assests/chatify_logo_sm.png" alt="">
+        <a href="../templates/profile.html">Account</a>
+    </header>
+    <nav class="navbar">
+        <div id="menu">
+            <ul>
+                <li>Explore</li>
+                <!-- SHOULD ALLOW TO FIND ALL SERVERS IN DATABASE -->
+                <li>Servers</li>
+                <!-- SHOULD SHOWS ALL SERVERS OF THE LOGIN USER
+                     ONCE A SERVER IS SELECTED IT SHOULD SHOW ALL ITS CHANNELS -->
+                <li>Direct Messages</li>
+                <!-- SHOULD SHOW THE CHAT OF THE CHANNEL SELECTED-->
+            </ul>
+            <form action="GET">
+                <input type="text" placeholder="Find servers" class="input-text">
+            </form>
+        </div>
+    </nav>
+    <article class="main">
+        <!-- INSERT CONTENT TO SHOW HERE -->
+    </article>
+    <script>
+        function animate_menu() {
+            elem = document.getElementsByClassName('navbar')[0];
+            icon = document.getElementsByClassName('menu-btn')[0];
+            if (elem.id == 'open') {
+                elem.id = '';
+                icon.id = ''; 
+            }
+            else {
+                elem.id = 'open';
+                icon.id = 'open-menu-btn';         
+            }
+        };
+    </script>
+</body>
+
+</html>
