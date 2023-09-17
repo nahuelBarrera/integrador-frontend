@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../styles/profile.css">
+</head>
+
+<body class="grid-container">
+    <header class="header">
+        <button type="button" class="menu-btn" onclick="animate_menu()"></button>
+        <img src="../assests/chatify_logo_sm.png" alt="">
+        <a href="../templates/profile.html">Account</a>
+    </header>
+    <nav class="navbar">
+        <div class="expandable" id="menu">
+            <ul>
+                <li>Explore</li>
+                <li>Servers</li>
+                <li>Direct Messages</li>
+            </ul>
+            <form action="GET">
+                <input type="text" placeholder="Find servers" class="input-text">
+            </form>
+        </div>
+    </nav>
+    <article class="main">
+        <div id="profile-bg">
+            <span id="profile-photo">
+            </span>
+            <span id="buttons">
+            </span>
+            <div id="info-content">
+                <p><strong>Username:</strong> <span id="username"></span></p>
+                <p><strong>Email:</strong> <span id="email"></span></p>
+                <p><strong>First Name:</strong> <span id="first_name"></span></p>
+                <p><strong>Last Name:</strong> <span id="last_name"></span></p>
+            </div>
+            <button id="logout-btn"><strong>Logout</strong></button>
+            <button id="edit-btn"><strong>Edit</strong></button>
+        </div>
+    </article>
+    <script>
+        function animate_menu() {
+            elem = document.getElementsByClassName('navbar')[0];
+            icon = document.getElementsByClassName('menu-btn')[0];
+            if (elem.id == 'open') {
+                elem.id = '';
+                icon.id = ''; 
+            }
+            else {
+                elem.id = 'open';
+                icon.id = 'open-menu-btn';         
+            }
+        };
+    </script>
+</body>
+
+</html>
