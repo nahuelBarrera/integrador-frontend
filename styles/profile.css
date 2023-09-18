@@ -22,10 +22,10 @@ body {
     padding-top: 4rem;
 }
 
-.grid-container>* {
+.grid-container header {
     box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
     border-radius: 4px;
-    padding: 10px;
     text-align: center;
 }
 
@@ -106,7 +106,9 @@ body {
 }
 
 #menu {
-    background-color: rgb(37, 37, 37);
+    background-color: rgb(37, 37, 37, 0.5);
+    box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
     margin-bottom: -1rem;
     display: flex;
     flex-direction: column;
@@ -132,7 +134,7 @@ body {
 }
 
 #menu a {
-    background-color: #414141;
+    background-color: rgba(65, 65, 65, 0.5);
     text-align: start;
     color: aliceblue;
     text-decoration: none;
@@ -164,6 +166,7 @@ body {
     grid-template-rows: repeat(2, auto); */
     grid-template: 
                 "photo" auto
+                "btn1"
                 "info" auto
                 "btn2" auto;
     background-position: top center;
@@ -201,8 +204,9 @@ body {
     flex-direction: column;
     padding: 1rem;
     border: 0;
-    background-image: linear-gradient(rgba(0, 191, 99, 0.5), black);
+    background-image: linear-gradient(rgba(0, 191, 99, 0.2), black);
     border-radius: 1rem;
+    backdrop-filter: blur(5px);
     justify-content: center;
     align-items:start;
     height: max-content;
@@ -242,6 +246,25 @@ body {
     grid-area: edit;
 }
 
+#edit li {
+    padding-top: 0.6rem;
+}
+
+#edit a {
+    background-image: url('../assests/edit-white.png');
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-position: center;
+    background-size: cover;
+    height: 1.3rem;
+    width: 1.3rem;
+}
+
+#edit a:hover{
+    filter: drop-shadow(1px 1px 1px #00ff22);
+    background-image: url('../assests/edit-green.png');
+}
+
 #pass {
     grid-area: pass;
     text-decoration: none;
@@ -251,6 +274,19 @@ body {
     justify-content: end;
     align-items: center;
     padding-right: 1rem;
+}
+
+#pass img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+#pass:hover {
+    text-shadow: 1px 1px 3px #00ff22;
+}
+
+#pass img:hover {
+    filter: drop-shadow(1px 1px 1px #00ff22);
 }
 
 #logout-btn {
@@ -329,7 +365,7 @@ li {
     #profile-bg {
         grid-template: 
             "photo info" auto
-            "photo btn2" auto;
+            "btn1 btn2" auto;
         background-image: url(../assests/profil-picture-landscape.png);
         background-position: center;
         background-repeat: no-repeat;

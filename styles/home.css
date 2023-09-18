@@ -22,10 +22,10 @@ body {
     padding-top: 4rem;
 }
 
-.grid-container>* {
+.grid-container header {
     box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
     border-radius: 4px;
-    padding: 10px;
     text-align: center;
 }
 
@@ -106,7 +106,9 @@ body {
 }
 
 #menu {
-    background-color: rgb(37, 37, 37);
+    background-color: rgb(37, 37, 37, 0.5);
+    box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
     margin-bottom: -1rem;
     display: flex;
     flex-direction: column;
@@ -139,7 +141,7 @@ body {
 }
 
 #menu a {
-    background-color: #414141;
+    background-color: rgba(65, 65, 65, 0.5);
     text-align: start;
     color: aliceblue;
     text-decoration: none;
