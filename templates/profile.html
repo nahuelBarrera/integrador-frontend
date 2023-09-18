@@ -17,29 +17,56 @@
     <nav class="navbar">
         <div class="expandable" id="menu">
             <ul>
-                <li>Explore</li>
-                <li>Servers</li>
-                <li>Direct Messages</li>
+                <li><a href="" title="Explore"><img src="../assests/server-explore-icon-white.png" alt="">Explore</a></li>
+                <!-- SHOULD ALLOW TO FIND ALL SERVERS IN DATABASE -->
+                <li><a href="" title="Servers"><img src="../assests/server-icon-white.png" alt="">Servers</a></li>
+                <!-- SHOULD SHOWS ALL SERVERS OF THE LOGIN USER
+                     ONCE A SERVER IS SELECTED IT SHOULD SHOW ALL ITS CHANNELS -->
+                <li><a href="" title="Direc Messages"><img src="../assests/message-white.png" alt="">Direct Messages</a></li>
+                <!-- SHOULD SHOW THE CHAT OF THE CHANNEL SELECTED-->
             </ul>
-            <form action="GET">
-                <input type="text" placeholder="Find servers" class="input-text">
-            </form>
+            <a href="../templates/profile.html" title="Account"><img src="../assests/user-white.png" alt="">Account</a>
         </div>
     </nav>
     <article class="main">
         <div id="profile-bg">
-            <span id="profile-photo">
-            </span>
-            <span id="buttons">
+            <span>
+                <a href="#" id="profile-photo"></a>
             </span>
             <div id="info-content">
-                <p><strong>Username:</strong> <span id="username"></span></p>
-                <p><strong>Email:</strong> <span id="email"></span></p>
-                <p><strong>First Name:</strong> <span id="first_name"></span></p>
-                <p><strong>Last Name:</strong> <span id="last_name"></span></p>
-            </div>
+                <div id="fields">
+                    <ul id="tag">
+                        <li>
+                            <strong>Username:</strong>
+                        </li>
+                        <li>
+                            <strong>Email:</strong>
+                        </li>
+                        <li>
+                            <strong>First Name:</strong>
+                        </li>
+                        <li>
+                            <strong>Last Name:</strong> 
+                        </li>
+                    </ul>
+                    <ul id="value">
+                        <li><span id="username">rmarting13</span></li>
+                        <li><span id="email">rmarting13@gmail.com</span></li>
+                        <li><span id="first_name">Martin</span></li>
+                        <li><span id="last_name">Gonzalez</span></li>
+                    </ul>
+                    <ul id="edit">
+                        <li> <a href="#" title="Edit"><img src="../assests/edit-white.png" alt=""></a></li>
+                        <li> <a href="#" title="Edit"><img src="../assests/edit-white.png" alt=""></a></li>
+                        <li> <a href="#" title="Edit"><img src="../assests/edit-white.png" alt=""></a></li>
+                        <li> <a href="#" title="Edit"><img src="../assests/edit-white.png" alt=""></a></li>
+                    </ul>
+                    <a href="#" id="pass" title="Reset password">
+                        <img src="../assests/reset-password-white.png" alt="">Reset password</a>
+                </div>
+                </div>
             <button id="logout-btn"><strong>Logout</strong></button>
-            <button id="edit-btn"><strong>Edit</strong></button>
+            <!-- <button id="edit-btn"><strong>Edit</strong></button> -->
         </div>
     </article>
     <script>

@@ -94,7 +94,7 @@ body {
     position: fixed;
     display: grid;
     margin-top: -0.75rem;
-    grid-template-columns:  0.48fr;
+    grid-template-columns: 0fr;
     transition: grid-template-columns 200ms;
     width: max-content;
     height: -webkit-fill-available;
@@ -116,7 +116,6 @@ body {
     padding: 1rem 0;
     min-width: 0;
     overflow: hidden;
-    white-space: nowrap;
 }
 
 #menu ul {
@@ -125,23 +124,14 @@ body {
 
 }
 
-#menu img {
-    width: 2rem;
-    height: 2rem;
-    margin-right: 0.5rem;
-}
-
-#menu a {
-    background-color: #414141;
-    text-align: start;
-    color: aliceblue;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
+#menu ul li {
     padding: 0.5rem;
+    background-color: #414141;
+    color: aliceblue;
+    text-align: start;
 }
 
-#menu a:hover {
+#menu ul li:hover {
     background-color: #8C52FF;
     color: aliceblue;
 }
@@ -157,139 +147,24 @@ body {
     align-items: center;
 }
 
-#profile-bg {
-    display: grid;
-    gap: 1rem;
-    /* grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto); */
-    grid-template: 
-                "photo" auto
-                "info" auto
-                "btn2" auto;
-    background-position: top center;
-    background-repeat: no-repeat;
-    background-attachment: unset;
-    background-image: url(../assests/profil-picture-portrait.png);
-    background-size: cover;
-    border-radius: inherit;
-    /* height:fit-content;
-    width:fit-content; */
-    padding: 1rem;
-    box-shadow: 0 0 3rem 0.5rem #8C52FF;
-}
-
-#profile-bg > span {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.7rem;
-}
-
-#profile-photo {
-    grid-area: photo;
-    background-image: url('../assests/Photo-De-Profil-discord-Style.jpg');
-    background-repeat: no-repeat;
-    background-attachment: unset;
-    background-size: cover;
-    border-radius: 10rem;
-    width: 12rem;
-    height: 12rem;
-}
-
-#info-content {
-    grid-area: info;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    border: 0;
-    background-image: linear-gradient(rgba(0, 191, 99, 0.5), black);
-    border-radius: 1rem;
-    justify-content: center;
-    align-items:start;
-    height: max-content;
-}
-
-#fields {
-    color: azure;
-    display: grid;
-    gap: 1rem;
-    grid-template:
-        "tag    value   edit" auto
-        "pass   pass    pass";
-}
-
-#info-content li {
-    display: flex;
-    padding: 0.5rem 0;
-    align-items: center;
-
-}
-
-#info-content img {
-    height: 1.2rem;
-    width: 1.2rem;
-    margin-left: 0.5rem;
-}
-
-#tag {
-    grid-area: tag;
-}
-
-#value {
-    grid-area: value;
-}
-
-#edit {
-    grid-area: edit;
-}
-
-#pass {
-    grid-area: pass;
-    text-decoration: none;
-    color: azure;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: end;
-    align-items: center;
-    padding-right: 1rem;
-}
-
-#logout-btn {
-    grid-area: btn2;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    background-color: #8C52FF;
-    font-size: large;
-    /* width: -webkit-fill-available; */
-    color: aliceblue;
-}
-
-#logout-btn:hover {
-    background-color: #4f1eb3;
-    box-shadow: 0 0 0.5rem 0.3rem #09ff00;
-}
-
-#edit-btn {
-    grid-area: btn1;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    background-color: #1cb91c;
-    font-size: large;
-    color: rgb(255, 255, 255);
-}
-
-#edit-btn:hover {
-    background-color: #007400;
-    box-shadow: 0 0 0.5rem 0.3rem #9a4cff;
-}
-
-/* .footer {
-    grid-area: footer;
-    background-color: #8c96a0;
-} */
+/*
+    ADD HERE ALL CSS AND STYLES THAT WILL BE APPLIED
+    TO THE MAIN SECTION CONTENT. FOR EXAMPLE FOR EACH SELECTED OPTION
+    FROM MENU 
+*/
 
 li {
     list-style-type: none;
     margin: 0 1rem;
+}
+
+.input-text {
+    border: 1px solid;
+    padding: 0.1rem;
+    border-radius: 0.2rem;
+    margin: 0.5rem;
+    background-color: #444444;
+    color: aliceblue;
 }
 
 ::placeholder {
@@ -325,31 +200,7 @@ li {
         
         
     }
-
-    #profile-bg {
-        grid-template: 
-            "photo info" auto
-            "photo btn2" auto;
-        background-image: url(../assests/profil-picture-landscape.png);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: unset;
-        background-size: cover;
-    }
     
-    #profile-bg > span {
-        display: flex;
-        justify-content: center;
-        align-items: end;
-        margin-right: 2rem;
-        padding: 0.9rem 0rem 0.55rem 1.1rem;
-    }
-
-    #profile-photo {
-        width: 9.5rem;
-        height: 9.5rem;
-    }
-
     .main {
         flex-direction: row-reverse;
     }

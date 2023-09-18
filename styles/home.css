@@ -94,7 +94,7 @@ body {
     position: fixed;
     display: grid;
     margin-top: -0.75rem;
-    grid-template-columns: 0fr;
+    grid-template-columns: 0.48fr;
     transition: grid-template-columns 200ms;
     width: max-content;
     height: -webkit-fill-available;
@@ -116,6 +116,7 @@ body {
     padding: 1rem 0;
     min-width: 0;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 #menu ul {
@@ -124,14 +125,30 @@ body {
 
 }
 
-#menu ul li {
-    padding: 0.5rem;
+/* #menu a {
     background-color: #414141;
     color: aliceblue;
     text-align: start;
+} */
+
+
+#menu img {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
 }
 
-#menu ul li:hover {
+#menu a {
+    background-color: #414141;
+    text-align: start;
+    color: aliceblue;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+#menu a:hover {
     background-color: #8C52FF;
     color: aliceblue;
 }
@@ -146,6 +163,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+/*
+    ADD HERE ALL CSS AND STYLES THAT WILL BE APPLIED
+    TO THE MAIN SECTION CONTENT. FOR EXAMPLE FOR EACH SELECTED OPTION
+    FROM MENU 
+*/
 
 li {
     list-style-type: none;
