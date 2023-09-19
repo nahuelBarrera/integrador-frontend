@@ -33,7 +33,7 @@ body {
     grid-area: header;
     color: azure;
     position: fixed;
-    width: -webkit-fill-available;
+    width: 100%;
     background-color: #36097e80;
     border: #5221a0 2px solid;
     border-radius: 0.3rem;
@@ -97,8 +97,8 @@ body {
     grid-template-columns: 0.48fr;
     transition: grid-template-columns 200ms;
     width: max-content;
-    height: -webkit-fill-available;
-    padding: 0;
+    height: 100%;
+    padding-bottom: 3rem;
 }
 
 .navbar#open {
@@ -114,7 +114,7 @@ body {
     flex-direction: column;
     align-items: inherit;
     justify-content:space-between;
-    height: auto;
+    height: 100%;
     padding: 1rem 0;
     min-width: 0;
     overflow: hidden;

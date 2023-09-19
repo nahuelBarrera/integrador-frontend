@@ -33,7 +33,7 @@ body {
     grid-area: header;
     color: azure;
     position: fixed;
-    width: -webkit-fill-available;
+    width: 100%;
     background-color: #36097e80;
     border: #5221a0 2px solid;
     border-radius: 0.3rem;
@@ -97,8 +97,8 @@ body {
     grid-template-columns:  0.48fr;
     transition: grid-template-columns 200ms;
     width: max-content;
-    height: -webkit-fill-available;
-    padding: 0;
+    height: 100%;
+    padding-bottom: 3rem;
 }
 
 .navbar#open {
@@ -114,7 +114,7 @@ body {
     flex-direction: column;
     align-items: inherit;
     justify-content:space-between;
-    height: auto;
+    height: 100%;
     padding: 1rem 0;
     min-width: 0;
     overflow: hidden;
@@ -172,7 +172,7 @@ body {
     background-position: top center;
     background-repeat: no-repeat;
     background-attachment: unset;
-    background-image: url(../assests/profil-picture-portrait.png);
+    background-image: url(../assests/whatsapp-chat-iphone-wallpapers.jpg);
     background-size: cover;
     border-radius: inherit;
     /* height:fit-content;
@@ -184,7 +184,6 @@ body {
 #profile-bg > span {
     display: flex;
     justify-content: center;
-    margin-top: 1.7rem;
 }
 
 #profile-photo {
@@ -193,6 +192,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: unset;
     background-size: cover;
+    border: 1rem #8C52FF solid;
     border-radius: 10rem;
     width: 12rem;
     height: 12rem;
@@ -318,10 +318,6 @@ body {
     box-shadow: 0 0 0.5rem 0.3rem #9a4cff;
 }
 
-/* .footer {
-    grid-area: footer;
-    background-color: #8c96a0;
-} */
 
 li {
     list-style-type: none;
@@ -366,7 +362,7 @@ li {
         grid-template: 
             "photo info" auto
             "btn1 btn2" auto;
-        background-image: url(../assests/profil-picture-landscape.png);
+        background-image: url(../assests/whatsapp-chat-iphone-wallpapers-landscape.jpg);
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: unset;
@@ -376,9 +372,7 @@ li {
     #profile-bg > span {
         display: flex;
         justify-content: center;
-        align-items: end;
-        margin-right: 2rem;
-        padding: 0.9rem 0rem 0.55rem 1.1rem;
+        align-items: center;
     }
 
     #profile-photo {

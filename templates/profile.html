@@ -51,10 +51,10 @@
                         </li>
                     </ul>
                     <ul id="value">
-                        <li><span id="username">rmarting13</span></li>
-                        <li><span id="email">rmarting13@gmail.com</span></li>
-                        <li><span id="first_name">Martin</span></li>
-                        <li><span id="last_name">Gonzalez</span></li>
+                        <li><span id="username"></span></li>
+                        <li><span id="email"></span></li>
+                        <li><span id="first_name"></span></li>
+                        <li><span id="last_name"></span></li>
                     </ul>
                     <ul id="edit">
                         <li> <a href="#" title="Edit"></a></li>
@@ -70,20 +70,7 @@
             <!-- <button id="edit-btn"><strong>Edit</strong></button> -->
         </div>
     </article>
-    <script>
-        function animate_menu() {
-            elem = document.getElementsByClassName('navbar')[0];
-            icon = document.getElementsByClassName('menu-btn')[0];
-            if (elem.id == 'open') {
-                elem.id = '';
-                icon.id = ''; 
-            }
-            else {
-                elem.id = 'open';
-                icon.id = 'open-menu-btn';         
-            }
-        };
-    </script>
+    <script src="../scripts/profile.js"></script>
 </body>
 
 </html>

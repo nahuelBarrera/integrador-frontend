@@ -16,17 +16,41 @@
       <img id="logo" src="../assests/chatify_logo_lg.png" alt="">
       <div id="form-content">
         <h4>Please login</h4>
-        <form action="POST">
-          <p><input class="input-text" type="text" id="username" placeholder="username" required></p>
-          <p><input class="input-text" type="text" id="password" placeholder="password" required></p>
-          <p><input type="submit" name="login" id="login-btn" value="Log In"></p>
+        <form action="POST" id="login-form" name="login">
+          <p><input class="input-text" type="text" id="username-log" placeholder="username" required></p>
+          <p><input class="input-text" type="text" id="password-log" placeholder="password" required></p>
+          <p><input type="submit" form="login-form" name="login" id="login-btn" value="Log In"></p>
         </form>
-        <p><span style="color: aliceblue;">Need an account? </span><span><a href="#" style="color: #00BF63;" >Sign In</a></span></p>
+        <p>
+            <span style="color: aliceblue;">Need an account? </span>
+            <span><button id="signin-btn" onclick=open_modal()>Sign In</a></span>
+        </p>
       </div>
     </article>
     <footer class="footer">
       <h1>Footer</h1>
     </footer>
+    <div class="modal">
+      <span class="close-btn">
+        <button id="close-btn" onclick=close_modal() title="Close"></button>
+      </span>
+      <div id="form-container">
+        <span class="form-content">
+          <h4>Please Sign In</h4>
+          <form action="POST" id="signin-form" name="signin">
+            <p><input class="input-text" type="text" id="username-sign" placeholder="username" required></p>
+            <p><input class="input-text" type="text" id="email" placeholder="email" required></p>
+            <p><input class="input-text" type="text" id="password-sign" placeholder="password" required></p>
+            <span>
+              <p><input type="submit" form="signin-form" name="signin" id="confirm-btn" value="Confirm"></p>
+              <p><input type="reset" form="signin" name="signin" id="cancel-btn" value="Cancel"></p>
+            </span>
+            
+          </form>
+        </span>
+      </div>
+      </div>
+    <script src="../scripts/login.js"></script>
 </body>
 
 </html>

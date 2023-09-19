@@ -36,7 +36,7 @@ body {
     grid-area: header;
     color: azure;
     position: fixed;
-    width: -webkit-fill-available;
+    width: 100%;
     background-color: #36097e80;
     border: #5221a0 2px solid;
     border-radius: 0.3rem;
