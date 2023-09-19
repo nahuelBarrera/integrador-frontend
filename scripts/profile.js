@@ -48,8 +48,8 @@ function logOut() {
 }
 
 function animate_menu() {
-    elem = document.getElementsByClassName('navbar')[0];
-    icon = document.getElementsByClassName('menu-btn')[0];
+    const elem = document.getElementsByClassName('navbar')[0];
+    const icon = document.getElementsByClassName('menu-btn')[0];
     if (elem.id == 'open') {
         elem.id = '';
         icon.id = ''; 
@@ -58,7 +58,16 @@ function animate_menu() {
         elem.id = 'open';
         icon.id = 'open-menu-btn';         
     }
-};
+}
+
+function edit() {
+    const attr = this.getAttribute('class').split(' ')[0];
+    console.log(attr);
+    const elem = document.querySelector('.'+attr);
+    console.log(elem);
+    html = `<input class="input-text" type="text" id="${attr}" placeholder="${attr}">`;
+    elem.insertAdjacentHTML("afterbegin", html);
+}
 
 window.addEventListener('load', () => {
     getProfile();
@@ -66,3 +75,8 @@ window.addEventListener('load', () => {
 
 document.getElementById("logout-btn").addEventListener("click", logOut);
 
+const edit_btn = document.getElementsByClassName("edit")
+let array = Array.from(edit_btn);
+array.forEach(element => {
+    element.addEventListener("click", edit);
+});

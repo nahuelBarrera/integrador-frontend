@@ -329,6 +329,19 @@ li {
     font-size: 1.1rem;
 }
 
+.input-text {
+    border: 1px solid;
+    width: 100%;
+    background-color: #444444;
+    color: aliceblue;
+}
+
+input {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
 .grid-container {
     display: grid;
     gap: 1rem;
