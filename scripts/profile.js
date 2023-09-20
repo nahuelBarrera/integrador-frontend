@@ -8,20 +8,20 @@ function getProfile() {
             if (response.status === 200) {
                 return response.json().then(data => {
                     console.log(data)
-                    document.getElementById("username").innerText = data.username;
-                    document.getElementById("email").innerText = data.email;
-                    document.getElementById("first_name").innerText = data.first_name;
-                    document.getElementById("last_name").innerText = data.last_name;
+                    document.getElementById('username').innerText = data.username;
+                    document.getElementById('email').innerText = data.email;
+                    document.getElementById('first_name').innerText = data.first_name;
+                    document.getElementById('last_name').innerText = data.last_name;
                 });
             } else {
                 return response.json().then(data => {
                     alert(data.error);
                 });
             }
-        })
-        .catch(error => {
-            alert("An error happened");
         });
+        // .catch(error => {
+        //     alert("An error happened");
+        // });
 }
 
 function logOut() {
@@ -62,11 +62,10 @@ function animate_menu() {
 
 function edit() {
     const attr = this.getAttribute('class').split(' ')[0];
-    console.log(attr);
-    const elem = document.querySelector('.'+attr);
-    console.log(elem);
-    html = `<input class="input-text" type="text" id="${attr}" placeholder="${attr}">`;
-    elem.insertAdjacentHTML("afterbegin", html);
+    const elem = document.getElementById(attr);
+    const value = elem.innerText;
+    html = `<input class="input-text" type="text" id="${attr}" placeholder="${value}">`;
+    elem.innerHTML = html;
 }
 
 window.addEventListener('load', () => {

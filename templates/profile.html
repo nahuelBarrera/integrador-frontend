@@ -38,23 +38,29 @@
             <button id="edit-btn">Edit photo</button>
             <div id="info-content" class="table">
                 <form action="PUT">
-                    <div class="column">
-                        <span class="row"> <strong>Username:</strong></span>
-                        <span class="row"> <strong>Email:</strong></span>
-                        <span class="row"> <strong>First Name:</strong></span>
-                        <span class="row"> <strong>Last Name:</strong></span>
-                    <div class="column">
-                        <span class="username row"></span>
-                        <span class="email row"></span>
-                        <span class="first-name row"></span>
-                        <span class="last-name row"></span>
-                    <div class="column">
-                        <a type="button" class="username edit row" title="Edit"></a>
-                        <a type="button" class="email edit row" title="Edit"></a>
-                        <a type="button" class="first-name edit row" title="Edit"></a>
-                        <a type="button" class="last-name edit row" title="Edit"></a>                       </ul>
-                        <a href="#" id="pass" title="Reset password">
-                    </div>
+                    <table>
+                        <tr>
+                            <td><span class=""> <strong>Username:</strong></span></td>
+                            <td><span id="username"></span></td>
+                            <td><a type="button" class="username edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Email:</strong></span></td>
+                            <td><span id="email"></span></td>
+                            <td><a type="button" class="email edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>First Name:</strong></span></td>
+                            <td><span id="first-name"></span></td>
+                            <td><a type="button" class="first-name edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Last Name:</strong></span></td>
+                            <td><span id="last-name"></span></td>
+                            <td><a type="button" class="last-name edit" title="Edit"></a></td>
+                        </tr>
+                    </table>
+                        <!-- <a href="#" id="pass" title="Reset password"> -->
                     <div>
                         <img src="../assests/reset-password-white.png" alt="">Reset password</a>
                     </div>

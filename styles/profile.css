@@ -207,14 +207,12 @@ body {
     border-radius: 1rem;
     backdrop-filter: blur(5px);
     height: max-content;
+    width: max-content;
 }
 
-.row {
-    display:table-row;
-}
-
-.column {
-    display: table-column;
+table {
+    color: aliceblue;
+    border-spacing: 1rem;
 }
 
 #info-content img {
@@ -224,6 +222,7 @@ body {
 }
 
 .edit {
+    display: block;
     background-image: url('../assests/edit-white.png');
     background-repeat: no-repeat;
     background-attachment: unset;
@@ -239,7 +238,6 @@ body {
 }
 
 #pass {
-    grid-area: pass;
     text-decoration: none;
     color: azure;
     display: flex;
@@ -291,7 +289,6 @@ body {
     box-shadow: 0 0 0.5rem 0.3rem #9a4cff;
 }
 
-
 li {
     list-style-type: none;
     margin: 0 1rem;
@@ -304,15 +301,15 @@ li {
 
 .input-text {
     border: 1px solid;
-    width: 100%;
+    /* width: 100%; */
     background-color: #444444;
     color: aliceblue;
 }
 
 input {
     border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin: 0.5rem;
+    padding: 0.3rem;
+    /* margin: 0.5rem; */
 }
 
 .grid-container {
