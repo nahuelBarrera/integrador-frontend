@@ -200,32 +200,21 @@ body {
 
 #info-content {
     grid-area: info;
-    display: flex;
-    flex-direction: column;
+    display: table;
     padding: 1rem;
     border: 0;
     background-image: linear-gradient(rgba(0, 191, 99, 0.2), black);
     border-radius: 1rem;
     backdrop-filter: blur(5px);
-    justify-content: center;
-    align-items:start;
     height: max-content;
 }
 
-#fields {
-    color: azure;
-    display: grid;
-    gap: 1rem;
-    grid-template:
-        "tag    value   edit" auto
-        "pass   pass    pass";
+.row {
+    display:table-row;
 }
 
-#info-content li {
-    display: flex;
-    padding: 0.5rem 0;
-    align-items: center;
-
+.column {
+    display: table-column;
 }
 
 #info-content img {
@@ -234,23 +223,7 @@ body {
     margin-left: 0.5rem;
 }
 
-#tag {
-    grid-area: tag;
-}
-
-#value {
-    grid-area: value;
-}
-
-#edit {
-    grid-area: edit;
-}
-
-#edit li {
-    padding-top: 0.6rem;
-}
-
-#edit a {
+.edit {
     background-image: url('../assests/edit-white.png');
     background-repeat: no-repeat;
     background-attachment: unset;
@@ -260,7 +233,7 @@ body {
     width: 1.3rem;
 }
 
-#edit a:hover{
+.edit:hover{
     filter: drop-shadow(1px 1px 1px #00ff22);
     background-image: url('../assests/edit-green.png');
 }
