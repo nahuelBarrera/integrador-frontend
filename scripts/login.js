@@ -75,7 +75,7 @@ document.getElementById("login-form").addEventListener("submit", (event) => {
     logIn();
 });
 
-document.getElementById("signin-form").addEventListener("submit", (event) => {
+document.getElementById("signup-form").addEventListener("submit", (event) => {
     event.preventDefault();
     signUp();
 });

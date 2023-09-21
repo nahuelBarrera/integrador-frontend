@@ -73,22 +73,22 @@
             </div>
         </div>
     </article>
-    <div class="modal">
+    <div id="modal">
         <span class="close-btn">
           <button id="close-btn" onclick=close_modal() title="Close"></button>
         </span>
         <div id="form-container">
-          <span class="form-content">
-            <h4>Validate Password</h4>
+          <!-- <span class="form-content">
+            <h3>Password validation</h3>
+            <h5>Please insert your current password:</h5>
             <form method='GET' id="pass-form" name="pass">
               <p><input class="input-pass" type="password" id="cur-pass" placeholder="current password" required></p>
-              <p><input class="input-pass" type="password" id="new-pass" placeholder="new password" required></p>
               <span>
                 <p><input type="submit" form="pass-form" name="pass-validate" id="validate-btn" value="Validate"></p>
                 <p><input type="reset" form="pass-form" name="pass-cancel" id="cancel-btn" value="Cancel"></p>
               </span>
             </form>
-          </span>
+          </span> -->
         </div>
       </div>
     <script src="../scripts/profile.js"></script>

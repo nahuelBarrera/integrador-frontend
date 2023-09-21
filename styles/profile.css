@@ -42,6 +42,7 @@ body {
     justify-content: space-between;
     padding: 0 1rem;
     margin-top: -4rem;
+    z-index: 1;
 }
 
 .header a {
@@ -99,6 +100,7 @@ body {
     width: max-content;
     height: 100%;
     padding-bottom: 3rem;
+    z-index: 1;
 }
 
 .navbar#open {
@@ -333,17 +335,17 @@ input {
         "navbar main" auto;
 }
 
-h4 {
+h3, h5 {
     color: lavender;
     margin: 1rem;
     text-align: center;
 }
 
-.modal {
+#modal {
     display: none;
 }
 
-.open-modal {
+#open-modal {
     display: grid;
     grid-template:
         "btn"
@@ -385,6 +387,11 @@ h4 {
     justify-content: center;
 }
 
+#image-preview {
+    width: 10rem;
+    height: 10rem;
+}
+
 .form-content {
     display: flex;
     flex-direction: column;
@@ -413,16 +420,17 @@ h4 {
     justify-content: center;
 }
 
-#confirm-btn {
+#validate-btn {
     border-radius: 0.5rem;
     padding: 0.5rem;
     background-color: #723bb9;
     font-size: large;
     color: rgb(255, 255, 255);
-    width: 100%
+    width: 100%;
+    font-weight: bold;
 }
 
-#confirm-btn:hover {
+#validate-btn:hover {
     box-shadow: 0 0 0.2rem 0.2rem #48ff1b;
 }
 
@@ -432,12 +440,14 @@ h4 {
     font-size: large;
     color: rgb(255, 255, 255);
     background-color: #c00000;
-    width: 100%
+    width: 100%;
+    font-weight: bold;
 }
 
 #cancel-btn:hover {
     box-shadow: 0 0 0.2rem 0.2rem #863aff;
 }
+
 
 @keyframes move-down {
     0%{
