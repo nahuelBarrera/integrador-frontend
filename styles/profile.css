@@ -221,7 +221,7 @@ table {
     margin-left: 0.5rem;
 }
 
-.edit {
+.edit, .password-reset {
     display: block;
     background-image: url('../assests/edit-white.png');
     background-repeat: no-repeat;
@@ -232,42 +232,53 @@ table {
     width: 1.3rem;
 }
 
-.edit:hover{
+.edit:hover, .password-reset:hover {
     filter: drop-shadow(1px 1px 1px #00ff22);
     background-image: url('../assests/edit-green.png');
 }
 
-#pass {
-    text-decoration: none;
-    color: azure;
+.password-reset {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.password-reset:hover {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.container-btn {
+    grid-area: btn2;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
-    padding-right: 1rem;
 }
 
-#pass img {
-    width: 1.5rem;
-    height: 1.5rem;
+#update-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #0059ff;
+    font-size: large;
+    color: aliceblue;
+    width: 100%;
+    margin-right: 0.3rem;
 }
 
-#pass:hover {
-    text-shadow: 1px 1px 3px #00ff22;
+#update-btn:hover:enabled {
+    background-color: #1418ff;
+    box-shadow: 0 0 0.5rem 0.3rem #fbff00;
 }
 
-#pass img:hover {
-    filter: drop-shadow(1px 1px 1px #00ff22);
+#update-btn:disabled {
+    background-color: #727272;
 }
 
 #logout-btn {
-    grid-area: btn2;
     border-radius: 0.5rem;
     padding: 0.5rem;
     background-color: #8C52FF;
     font-size: large;
-    /* width: -webkit-fill-available; */
     color: aliceblue;
+    width: 100%;
+    margin-left: 0.3rem;
 }
 
 #logout-btn:hover {
@@ -299,7 +310,7 @@ li {
     font-size: 1.1rem;
 }
 
-.input-text {
+.input-text, .input-pass {
     border: 1px solid;
     /* width: 100%; */
     background-color: #444444;
@@ -309,7 +320,7 @@ li {
 input {
     border-radius: 0.5rem;
     padding: 0.3rem;
-    /* margin: 0.5rem; */
+    font-size: 1rem;
 }
 
 .grid-container {
@@ -318,6 +329,130 @@ input {
     grid-template:
         "header header" max-content
         "navbar main" auto;
+}
+
+h4 {
+    color: lavender;
+    margin: 1rem;
+    text-align: center;
+}
+
+.modal {
+    display: none;
+}
+
+.open-modal {
+    display: grid;
+    grid-template:
+        "btn"
+        "form";
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin-top: -4rem;
+    animation-name: move-down;
+    animation-duration: 200ms;
+    animation-delay: 0ms;
+    animation-fill-mode:forwards;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.close-btn {
+    grid-area: btn;
+    display: flex;
+    justify-content: end;
+}
+
+#close-btn {
+    background-color: transparent;
+    border: none;
+    background-image: url('../assests/Close.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    width: 2rem;
+    height: 2rem;
+}
+
+#form-container {
+    grid-area: form;
+    display: flex;
+    justify-content: center;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 0;
+    background-image: linear-gradient(rgb(30, 172, 48), black);
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem 0.5rem #9d4edd;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+}
+
+.form-content p {
+    margin: 1rem;
+}
+
+.form-content a:hover {
+    text-shadow: 0px 0px 1px #75ff52;
+}
+
+.form-content span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#confirm-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #723bb9;
+    font-size: large;
+    color: rgb(255, 255, 255);
+    width: 100%
+}
+
+#confirm-btn:hover {
+    box-shadow: 0 0 0.2rem 0.2rem #48ff1b;
+}
+
+#cancel-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: large;
+    color: rgb(255, 255, 255);
+    background-color: #c00000;
+    width: 100%
+}
+
+#cancel-btn:hover {
+    box-shadow: 0 0 0.2rem 0.2rem #863aff;
+}
+
+@keyframes move-down {
+    0%{
+        transform: translateY(-100%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+
+@keyframes move-up {
+    0%{
+        transform: translateY(0%);
+    }
+    100%{
+        transform: translateY(-100%);
+    }
 }
 
 @media (min-width: 600px) {
