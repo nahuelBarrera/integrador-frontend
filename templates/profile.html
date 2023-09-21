@@ -37,7 +37,7 @@
             </span>
             <button id="edit-btn">Edit photo</button>
             <div id="info-content" class="table">
-                <form action="PUT" id="update">
+                <form method="PUT" id="update-form">
                     <table>
                         <tr>
                             <td><span class=""> <strong>Username:</strong></span></td>
@@ -51,13 +51,13 @@
                         </tr>
                         <tr>
                             <td><span class=""> <strong>First Name:</strong></span></td>
-                            <td><span id="first-name"></span></td>
-                            <td><a type="button" class="first-name edit " title="Edit"></a></td>
+                            <td><span id="first_name"></span></td>
+                            <td><a type="button" class="first_name edit " title="Edit"></a></td>
                         </tr>
                         <tr>
                             <td><span class=""> <strong>Last Name:</strong></span></td>
-                            <td><span id="last-name"></span></td>
-                            <td><a type="button" class="last-name edit" title="Edit"></a></td>
+                            <td><span id="last_name"></span></td>
+                            <td><a type="button" class="last_name edit" title="Edit"></a></td>
                         </tr>
                         <tr>
                             <td><span class=""> <strong>Password:</strong></span></td>
@@ -68,7 +68,7 @@
                 </form>
             </div>
             <div class="container-btn">
-                <button id="update-btn" disabled><strong>Update</strong></button>
+                <input type="submit" form='update-form' id="update-btn" value="Update" disabled></input>
                 <button id="logout-btn"><strong>Logout</strong></button>
             </div>
         </div>

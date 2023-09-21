@@ -269,9 +269,15 @@ input {
     justify-content: center;
 }
 
+#confirm-btn, #cancel-btn {
+    color: aliceblue;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
 #confirm-btn {
     background-color: #00BF63;
-    width: 100%
 }
 
 #confirm-btn:hover {
@@ -280,7 +286,6 @@ input {
 
 #cancel-btn {
     background-color: #c00000;
-    width: 100%
 }
 
 #cancel-btn:hover {

@@ -260,6 +260,8 @@ table {
     color: aliceblue;
     width: 100%;
     margin-right: 0.3rem;
+    display: flex;
+    justify-content: center;
 }
 
 #update-btn:hover:enabled {
