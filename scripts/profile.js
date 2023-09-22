@@ -66,38 +66,31 @@ function update() {
 }
 
 function uploadFile() {
-    const file = document.querySelector('input[type=file]');
+    const [file] = document.querySelector('input[type=file]').files;
     const formData = new FormData();
-    // if (file.files[0]) {
-    //     const reader = new FileReader();
-    //     reader.addEventListener('load', () => {
-    //         formData.append('file', reader.result);
-    //       });
-    //     reader.readAsDataURL(file.files[0]);
-    // }
-    formData.append('file', file.files[0], 'profile.jpg');
-    console.log(file.files[0] instanceof Blob);
-    fetch("http://127.0.0.1:5000/users", {
+    console.log(file)
+    formData.set('file', file);
+    console.log(formData.get('file'));
+    fetch("http://127.0.0.1:5000/users/upload", {
         method: 'PUT',
         headers: {
-            'Content-Type': '*/*',
-            'accept': '*/*'
+            'Content-Type': 'multipart/form-data'
         },
         body: formData,
         credentials: 'include'
     })
-    .then(response => {
-        if (response.status === 200) {
-            return response.json().then(data => {
-                alert(data.message);
-                window.location.href = "profile.html";
-            });
-        } else {
-            return response.json().then(data => {
-                alert(data.error)
-            });
-        }
-    });
+        .then(response => {
+            if (response.status === 200) {
+                return response.json().then(data => {
+                    alert(data.message);
+                    window.location.href = "profile.html";
+                });
+            } else {
+                return response.json().then(data => {
+                    alert(data.error)
+                });
+            }
+        });
 }
 
 function checkPassword() {
@@ -233,8 +226,8 @@ function selectImage() {
                             <img id="image-preview" src="" alt="">
                             <h3>Set Profile Photo</h3>
                             <h5>Please upload a picture file:</h5>
-                            <form method='PUT' id="photo-form" name="photo">
-                            <p><input class="input-text" type="file" onchange="previewImage()" id="photo-input" placeholder="Select a file to upload" required></p>
+                            <form action="http://127.0.0.1:5000/users/upload" method='post' id="photo-form" name="photo" enctype="multipart/form-data">
+                            <p><input class="input-text" type="file" onchange="previewImage()" id="photo-input" placeholder="Select a file to upload" name="file" required></p>
                             <span>
                                 <p><input type="submit" form="photo-form" name="confirm-upload" id="validate-btn" value="Confirm"></p>
                                 <p><input type="reset" form="photo-form" name="cancel-upload" id="cancel-btn" value="Cancel"></p>
