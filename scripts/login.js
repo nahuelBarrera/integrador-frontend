@@ -28,7 +28,7 @@ function logIn() {
         });
 }
 
-function signIn() {
+function signUp() {
     const data = {
         username: document.getElementById("username-sign").value,
         password: document.getElementById("password-sign").value,
@@ -46,7 +46,7 @@ function signIn() {
         .then(response => {
             if (response.status === 200) {
                 return response.json().then(data => {
-                    alert('You have successfully signed in');
+                    alert('You have successfully signed up');
                     window.location.href = "profile.html";
                 });
             } else {
@@ -75,7 +75,9 @@ document.getElementById("login-form").addEventListener("submit", (event) => {
     logIn();
 });
 
-document.getElementById("signin-form").addEventListener("submit", (event) => {
+document.getElementById("signup-form").addEventListener("submit", (event) => {
     event.preventDefault();
-    signIn();
+    signUp();
 });
+
+document.getElementById('cancel-btn').addEventListener('click', close_modal);

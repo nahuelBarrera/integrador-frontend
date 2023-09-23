@@ -36,44 +36,61 @@
                 <a href="#" id="profile-photo"></a>
             </span>
             <button id="edit-btn">Edit photo</button>
-            <div id="info-content">
-                <form action="PUT">
-                    <div id="fields">
-                        <ul id="tag">
-                            <li>
-                                <strong>Username:</strong>
-                            </li>
-                            <li>
-                                <strong>Email:</strong>
-                            </li>
-                            <li>
-                                <strong>First Name:</strong>
-                            </li>
-                            <li>
-                                <strong>Last Name:</strong>
-                            </li>
-                        </ul>
-                        <ul id="value">
-                            <li><span class="username"></span></li>
-                            <li><span class="email"></span></li>
-                            <li><span class="first-name"></span></li>
-                            <li><span class="last-name"></span></li>
-                        </ul>
-                        <ul id="edit">
-                            <li><a type="button" class="username edit" title="Edit"></a></li>
-                            <li><a type="button" class="email edit" title="Edit"></a></li>
-                            <li><a type="button" class="first-name edit" title="Edit"></a></li>
-                            <li><a type="button" class="last-name edit" title="Edit"></a></li>
-                        </ul>
-                        <a href="#" id="pass" title="Reset password">
-                            <img src="../assests/reset-password-white.png" alt="">Reset password</a>
-                    </div>
+            <div id="info-content" class="table">
+                <form method="PUT" id="update-form">
+                    <table>
+                        <tr>
+                            <td><span class=""> <strong>Username:</strong></span></td>
+                            <td><span id="username"></span></td>
+                            <td><a type="button" class="username edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Email:</strong></span></td>
+                            <td><span id="email"></span></td>
+                            <td><a type="button" class="email edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>First Name:</strong></span></td>
+                            <td><span id="first_name"></span></td>
+                            <td><a type="button" class="first_name edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Last Name:</strong></span></td>
+                            <td><span id="last_name"></span></td>
+                            <td><a type="button" class="last_name edit" title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Password:</strong></span></td>
+                            <td><span id="password"></span></td>
+                            <td><a type="button" class="password-reset" id='pass-btn' title="Edit"></a></td>
+                        </tr>
+                    </table>
                 </form>
             </div>
-            <button id="logout-btn"><strong>Logout</strong></button>
-            <!-- <button id="edit-btn"><strong>Edit</strong></button> -->
+            <div class="container-btn">
+                <input type="submit" form='update-form' id="update-btn" value="Update" disabled></input>
+                <button id="logout-btn"><strong>Logout</strong></button>
+            </div>
         </div>
     </article>
+    <div id="modal">
+        <span class="close-btn">
+          <button id="close-btn" onclick=close_modal() title="Close"></button>
+        </span>
+        <div id="form-container">
+          <!-- <span class="form-content">
+            <h3>Password validation</h3>
+            <h5>Please insert your current password:</h5>
+            <form method='GET' id="pass-form" name="pass">
+              <p><input class="input-pass" type="password" id="cur-pass" placeholder="current password" required></p>
+              <span>
+                <p><input type="submit" form="pass-form" name="pass-validate" id="validate-btn" value="Validate"></p>
+                <p><input type="reset" form="pass-form" name="pass-cancel" id="cancel-btn" value="Cancel"></p>
+              </span>
+            </form>
+          </span> -->
+        </div>
+      </div>
     <script src="../scripts/profile.js"></script>
 </body>
 
