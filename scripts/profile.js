@@ -4,23 +4,23 @@ function getProfile() {
         method: 'GET',
         credentials: 'include'
     })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json().then(data => {
-                    console.log(data)
-                    document.getElementById('username').innerText = data.username;
-                    document.getElementById('email').innerText = data.email;
-                    document.getElementById('first_name').innerText = data.first_name;
-                    document.getElementById('last_name').innerText = data.last_name;
-                    const html = `<h2 id='pass-text'>${'&#8226;'.repeat(data.password.length)}</h2>`;
-                    document.getElementById('password').innerHTML = html;
-                });
-            } else {
-                return response.json().then(data => {
-                    alert(data.error);
-                });
-            }
-        });
+    .then(response => {
+        if (response.status === 200) {
+            return response.json().then(data => {
+                console.log(data)
+                document.getElementById('username').innerText = data.username;
+                document.getElementById('email').innerText = data.email;
+                document.getElementById('first_name').innerText = data.first_name;
+                document.getElementById('last_name').innerText = data.last_name;
+                const html = `<h2 id='pass-text'>${'&#8226;'.repeat(data.password.length)}</h2>`;
+                document.getElementById('password').innerHTML = html;
+            });
+        } else {
+            return response.json().then(data => {
+                alert(data.error);
+            });
+        }
+    });
     // .catch(error => {
     //     alert("An error happened");
     // });
@@ -66,13 +66,13 @@ function update() {
 }
 
 function uploadFile() {
-    const [file] = document.querySelector('input[type=file]').files;
-    const formData = new FormData();
-    console.log(file)
-    formData.set('file', file);
-    console.log(formData.get('file'));
+    // const [file] = document.querySelector('input[type=file]').files;
+    // const formData = new FormData();
+    // console.log(file)
+    // formData.set('file', file);
+    // console.log(formData.get('file'));
     fetch("http://127.0.0.1:5000/users/upload", {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': 'multipart/form-data'
         },
@@ -234,10 +234,10 @@ function selectImage() {
                             </span>
                             </form>
                         </span>`
-    document.getElementById("photo-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        uploadFile();
-    });
+    // document.getElementById("photo-form").addEventListener("submit", (event) => {
+    //     event.preventDefault();
+    //     uploadFile();
+    // });
     document.getElementById('cancel-btn').addEventListener('click', close_modal);
     const element = document.getElementById('modal');
     element.id = 'open-modal';
