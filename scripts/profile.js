@@ -14,6 +14,21 @@ function getProfile() {
                 document.getElementById('last_name').innerText = data.last_name;
                 const html = `<h2 id='pass-text'>${'&#8226;'.repeat(data.password.length)}</h2>`;
                 document.getElementById('password').innerHTML = html;
+                fetch('http://127.0.0.1:5000/users/download', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => {
+                    if (response) {
+                        return response.blob().then(data => {
+                            const img = URL.createObjectURL(data);
+                            document.getElementById('profile-photo').style = `background-image: url(${img})`;
+                        })
+                    }
+                    else {
+                        console.log('NO SE PUDO DESCARGAR LA FOTO')
+                    }
+                })
             });
         } else {
             return response.json().then(data => {
@@ -24,21 +39,6 @@ function getProfile() {
     // .catch(error => {
     //     alert("An error happened");
     // });
-    fetch('http://127.0.0.1:5000/users/download', {
-        method: 'GET',
-        credentials: 'include'
-    })
-    .then(response => {
-        if (response) {
-            return response.blob().then(data => {
-                const img = URL.createObjectURL(data);
-                document.getElementById('profile-photo').style = `background-image: url(${img})`;
-            })
-        }
-        else {
-            console.log('NO SE PUDO DESCARGAR LA FOTO')
-        }
-    })
 }
 
 function update() {
