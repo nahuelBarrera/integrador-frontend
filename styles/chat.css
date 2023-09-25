@@ -227,7 +227,7 @@ body {
     width: 100%;
 }
 
-#send {
+#send, #cancel-update {
     width: 2rem;
     height: 2rem;
     background-color: transparent;
@@ -243,6 +243,22 @@ body {
 
 #send:hover {
     background-image: url('../assests/send-message.png');   
+}
+
+#update {
+    background-image: url('../assests/up-arrow-white.png');
+}
+
+#update:hover {
+    background-image: url('../assests/up-arrow-blue.png');
+}
+
+#cancel-update {
+    background-image: url('../assests/delete-button-white.png');
+}
+
+#cancel-update:hover {
+    background-image: url('../assests/delete-button-red.png');
 }
 
 #message-input {
@@ -262,6 +278,53 @@ body {
     height: auto;
     display: flex;
     flex-direction: column;
+}
+
+.msg-bubble span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.msg-bubble > span {
+    justify-content: space-between;
+}
+
+.owner-buble {
+    background-color: rgb(39 49 121 / 54%);
+}
+
+.owner-buble h4 {
+    color: orange;
+}
+
+
+.edit-msg, .delete.msg {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    margin: 0.2rem;
+}
+
+.edit-msg {
+    height: 1.6rem;
+    width: 1.6rem;
+    background-image: url('../assests/edit-msg-white.png'); 
+}
+
+.edit-msg:hover {
+    background-image: url('../assests/edit-msg-green.png');
+}
+
+.delete-msg {
+    height: 1.3rem;
+    width: 1.3rem;
+    background-image: url('../assests/delete-button-white.png'); 
+}
+
+.delete-msg:hover {
+    background-image: url('../assests/delete-button-red.png');
 }
 
 .user, .content {
