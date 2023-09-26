@@ -44,7 +44,7 @@ function signUp() {
         credentials: 'include'
     })
         .then(response => {
-            if (response.status === 200) {
+            if (response.status === 201) {
                 return response.json().then(data => {
                     alert('You have successfully signed up');
                     window.location.href = "profile.html";

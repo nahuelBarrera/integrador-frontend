@@ -190,7 +190,7 @@ body {
 
 #profile-photo {
     grid-area: photo;
-    background-image: url('../assests/Photo-De-Profil-discord-Style.jpg');
+    background-image: url('../assests/profile-avatar.png');
     background-repeat: no-repeat;
     background-attachment: unset;
     background-size: cover;

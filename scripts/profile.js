@@ -14,6 +14,21 @@ function getProfile() {
                 document.getElementById('last_name').innerText = data.last_name;
                 const html = `<h2 id='pass-text'>${'&#8226;'.repeat(data.password.length)}</h2>`;
                 document.getElementById('password').innerHTML = html;
+                fetch('http://127.0.0.1:5000/users/download', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => {
+                    if (response) {
+                        return response.blob().then(data => {
+                            const img = URL.createObjectURL(data);
+                            document.getElementById('profile-photo').style = `background-image: url(${img})`;
+                        })
+                    }
+                    else {
+                        console.log('NO SE PUDO DESCARGAR LA FOTO')
+                    }
+                })
             });
         } else {
             return response.json().then(data => {
@@ -66,15 +81,15 @@ function update() {
 }
 
 function uploadFile() {
-    // const [file] = document.querySelector('input[type=file]').files;
-    // const formData = new FormData();
-    // console.log(file)
-    // formData.set('file', file);
-    // console.log(formData.get('file'));
+    const [file] = document.querySelector('input[type=file]').files;
+    const formData = new FormData();
+    console.log(file)
+    formData.set('file', file, 'profile_picture.png');
+    console.log(formData.get('file'));
     fetch("http://127.0.0.1:5000/users/upload", {
         method: 'POST',
         headers: {
-            'Content-Type': 'multipart/form-data'
+            'Accept': 'application/json'
         },
         body: formData,
         credentials: 'include'
@@ -234,10 +249,10 @@ function selectImage() {
                             </span>
                             </form>
                         </span>`
-    // document.getElementById("photo-form").addEventListener("submit", (event) => {
-    //     event.preventDefault();
-    //     uploadFile();
-    // });
+    document.getElementById("photo-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        uploadFile();
+    });
     document.getElementById('cancel-btn').addEventListener('click', close_modal);
     const element = document.getElementById('modal');
     element.id = 'open-modal';

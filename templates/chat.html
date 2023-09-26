@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="stylesheet" href="../styles/chat.css">
 </head>
 
 <body class="grid-container">
@@ -14,42 +14,82 @@
         <img src="../assests/chatify_logo_sm.png" alt="">
         <a href="../templates/profile.html">Account</a>
     </header>
-    <nav class="navbar">
-        <div id="menu">
+    <nav class="navbar main" >
+        <div class="menu" id="main-nav">
             <ul>
-                <li>Explore</li>
+                <li><a href="" title="Explore"><img class="icon-navbar" src="../assests/server-explore-icon-white.png" alt="">Explore</a></li>
                 <!-- SHOULD ALLOW TO FIND ALL SERVERS IN DATABASE -->
-                <li>Servers</li>
+                <li><a href="" title="Servers"><img class="icon-navbar" src="../assests/server-icon-white.png" alt="">Servers</a></li>
                 <!-- SHOULD SHOWS ALL SERVERS OF THE LOGIN USER
-                     ONCE A SERVER IS SELECTED IT SHOULD SHOW ALL ITS CHANNELS -->
-                <li>Direct Messages</li>
+                    ONCE A SERVER IS SELECTED IT SHOULD SHOW ALL ITS CHANNELS -->
+                <li><a href="" title="Direc Messages"><img class="icon-navbar" src="../assests/message-white.png" alt="">Direct Messages</a></li>
                 <!-- SHOULD SHOW THE CHAT OF THE CHANNEL SELECTED-->
             </ul>
-            <form action="GET">
-                <input type="text" placeholder="Find servers" class="input-text">
-            </form>
+            <a href="../templates/profile.html" title="Account" id="account"><img class="icon-navbar" src="../assests/user-white.png" alt="">Account</a>
         </div>
     </nav>
-    <article class="main">
-        <!-- INSERT CONTENT TO SHOW HERE -->
-        <div>
-            
+    <main class="app">
+        <div class="menu-container">
+            <nav class="navbar server-nav">
+                <div class="menu" id="server-menu">
+                    <span class="option-btn-container">
+                        <button type="button" class="colapse-btn" onclick="animate_servers()" title="Colapse"></button>
+                        <span>
+                            <button type="button" class="option-btn-icon" id="search-server" title="Search"></button>
+                        </span>
+                        <span>
+                            <button type="button" class="option-btn-icon" id="new-server" title="New"></button>
+                        </span>
+                    </span>
+                    <ul id="server-list">
+                        <li>SERVER 1</li>
+                        <li>SERVER 2SERVERSERVERSERVERSERVER</li>
+                        <li>SERVER 3</li>
+                        <li>SERVER 4</li>
+                        <li>SERVER 5</li>
+                        <li>SERVER 6</li>
+                        <li>SERVER 7SERVERSERVER</li>
+                        <li>SERVER 8</li>
+                    </ul>
+                </div>
+            </nav>
+            <nav class="navbar channel-nav">
+                <div class="menu" id="channel-menu">
+                    <span class="option-btn-container">
+                        <button type="button" class="colapse-btn" onclick="animate_channels()" title="Colapse"></button>
+                        <span>
+                            <button type="button" class="option-btn-icon" id="search-server" title="Search"></button>
+                        </span>
+                        <span>
+                            <button type="button" class="option-btn-icon" id="new-server" title="New"></button>
+                        </span>
+                    </span>
+                    <ul id="channel-list">
+                        <li>CHANNEL 1</li>
+                        <li>CHANNEL 2</li>
+                        <li>CHANNEL 3</li>
+                        <li>CHANNEL 4CHANNELCHANNEL</li>
+                        <li>CHANNEL 5</li>
+                        <li>CHANNEL 6</li>
+                        <li>CHANNEL 7</li>
+                        <li>CHANNEL 8</li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-    </article>
-    <script>
-        function animate_menu() {
-            elem = document.getElementsByClassName('navbar')[0];
-            icon = document.getElementsByClassName('menu-btn')[0];
-            if (elem.id == 'open') {
-                elem.id = '';
-                icon.id = ''; 
-            }
-            else {
-                elem.id = 'open';
-                icon.id = 'open-menu-btn';         
-            }
-        };
-    </script>
+        <article class="chat">
+            <div id="chat-header">CHANNEL NAME</div>
+            <div id="chat-frame">
+                <ul class="list" id="msg-list">
+                </ul>
+            </div>
+            <div id="typing-bar">
+                <input type="text" id="message-input">
+                <input type="submit" id="send" name="send" value="">
+            </div>
+        </article>
+    </main>
+    <script src="../scripts/chat.js"></script>
 </body>
 
 </html>
