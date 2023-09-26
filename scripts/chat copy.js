@@ -92,20 +92,22 @@ function getChat() {
                 let cls = '';
                 data.forEach(msg => {
                     if (msg.owner) {
-                        const html = `<li class="msg-bubble owner-bubble" id="bubble-${msg.message_id}">
-                                        <span>
-                                            <h4 class="user"><strong>${msg.username}</strong></h4>
+                        const html = `<tr>
+                                        <td class="msg-bubble owner-bubble" id="bubble-${msg.message_id}">
                                             <span>
-                                            <a type="button" class="edit-msg" id=edit-${msg.message_id} title="Edit"></a>
-                                            <a type="button" class="delete-msg" id=delete-${msg.message_id} title="Delete"></a>
+                                                <h4 class="user"><strong>${msg.username}</strong></h4>
+                                                <span>
+                                                <a type="button" class="edit-msg" id=edit-${msg.message_id} title="Edit"></a>
+                                                <a type="button" class="delete-msg" id=delete-${msg.message_id} title="Delete"></a>
+                                                </span>
                                             </span>
-                                        </span>
-                                        <p class="content">${msg.content}</p>
-                                        <span>
-                                            ${msg.edited ? "<p>(Edited)</p>" : ''}
-                                            <p class="time">${msg.creation_date.substring(17, 22)}</p>
-                                        </span>
-                                    </li>`;
+                                            <p class="content">${msg.content}</p>
+                                            <span>
+                                                ${msg.edited ? "<p>(Edited)</p>" : ''}
+                                                <p class="time">${msg.creation_date.substring(17, 22)}</p>
+                                            </span>
+                                        </td>
+                                    </tr>`;
                         chat.insertAdjacentHTML('afterbegin', html);
                         document.getElementById(`edit-${msg.message_id}`).addEventListener('click', (e) => {
                             const id = e.target.id.substring(5);
@@ -230,7 +232,7 @@ function animate_menu() {
 };
 
 function animate_servers() {
-    elem = document.getElementsByClassName('navbar')[1];
+    elem = document.querySelector('.server-nav');
     icon = elem.querySelector('.colapse-btn');
     if (elem.id == 'open') {
         elem.id = '';
@@ -243,7 +245,7 @@ function animate_servers() {
 };
 
 function animate_channels() {
-    elem = document.getElementsByClassName('navbar')[2];
+    elem = document.querySelector('.channel-nav');
     icon = elem.querySelector('.colapse-btn');
     if (elem.id == 'open') {
         elem.id = '';
