@@ -248,15 +248,15 @@ function createServer() {
                                         <button class="delete-server" id="delete-server-${element.server_id}"></button>
                                     </span>
                                 </li>`;
-                        server_list.insertAdjacentHTML('beforeend', html);
-                        document.getElementById(`delete-server-${element.server_id}`).addEventListener('click', (e) => {
-                            const id = e.target.id.substring(14);
-                            deleteServer(id);
-                        });
-                        document.getElementById(`edit-server-${element.server_id}`).addEventListener('click', (e) => {
-                            const id = e.target.id.substring(12);
-                            updateServer(id);
-                        });
+                            server_list.insertAdjacentHTML('beforeend', html);
+                            server_list.querySelector(`#delete-server-${element.server_id}`).addEventListener('click', (e) => {
+                                const id = e.target.id.substring(14);
+                                deleteServer(id);
+                            });
+                            server_list.querySelector(`#edit-server-${element.server_id}`).addEventListener('click', (e) => {
+                                const id = e.target.id.substring(12);
+                                openServerEditForm(id);
+                            });
                         });
                     }
                     else {
@@ -275,8 +275,7 @@ function createServer() {
     });
 }
 
-function updateServer() {
-    //TODO: CREATE A MODAL FORM FOR GET DATA
+function updateServer(id) {
     const data = {
         name: document.getElementById('server-name').value,
         description: document.getElementById('server-description').value
@@ -290,9 +289,9 @@ function updateServer() {
             credentials: 'include'
     }).then(response => {
         if (response.status === 200) {
-            return response.json().then(data => {
+            return response.json().then(() => {
                 if(data.name) {
-                    const elem = document.getElementById(`channels-server-${id}`).innerHTML = data.name
+                    document.getElementById(`channels-server-${id}`).innerHTML = data.name;
                 }
             });
         }
@@ -341,7 +340,15 @@ function joinServer(id) {
     }).then(response => {
         if (response.status === 201) {
             return response.json().then(data => {
-                //TODO: INSERT USER IN THE SERVER'S USER JOINED LIST
+                const server = document.getElementById(`server-${id}`);
+                const btn = server.querySelector(`#join-server-${id}`);
+                btn.classList.remove('join-server');
+                btn.classList.add('left-server');
+                btn.id = `left-server-${id}`;
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.id.substring(12);
+                    leftServer(id);
+                });
                 //TODO: IN THE BACKEND ADD THE USER ID FROM SESSION TO LINK WITH THE SERVER ID
             });
         }
@@ -360,7 +367,40 @@ function leftServer(id) {
     }).then(response => {
         if (response.status === 204) {
             return response.json().then(data => {
-                //TODO: REMOVE ELEMENTS IN THE USER'S SERVERS LIST
+                let btn = document.getElementById('user-servers')
+                const elem = document.getElementById(`server-${id}`)
+                if(btn.disabled) {
+                    elem.remove();
+                }
+                else {
+                    btn = elem.querySelector(`#left-server-${id}`);
+                    btn.classList.remove('left-server');
+                    btn.classList.add('join-server');
+                    btn.id = `join-server-${id}`;
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.id.substring(12);
+                        joinServer(id);
+                    });
+                }
+                //TODO: IN THE BACKEND ADD THE USER ID FROM SESSION TO LINK WITH THE SERVER ID
+            });
+        }
+        else {
+            return response.json().then(data => {
+            alert(data.error);
+            });
+        }
+    });
+}
+
+function deleteServer(id) {
+    fetch (`http://127.0.0.1:5000/servers/${id}`, {
+        method: 'DELETE',
+        credentials: 'include'
+    }).then(response => {
+        if (response.status === 204) {
+            return response.json().then(data => {
+                document.getElementById(`server-${id}`).remove();
                 //TODO: IN THE BACKEND ADD THE USER ID FROM SESSION TO LINK WITH THE SERVER ID
             });
         }
@@ -377,6 +417,8 @@ function getAllServers() {
         method: 'GET',
         credentials: 'include'
     }).then(response => {
+        showAllServersColumn();
+        document.getElementById('all-servers').disabled = true;
         if (response.status === 200) {
             return response.json().then(data => {
                 const server_list = document.getElementById('server-list');
@@ -392,11 +434,11 @@ function getAllServers() {
                                     </span>
                                 </li>`;
                         server_list.insertAdjacentHTML('beforeend', html);
-                        document.getElementById(`delete-server-${element.server_id}`).addEventListener('click', (e) => {
+                        server_list.querySelector(`#delete-server-${element.server_id}`).addEventListener('click', (e) => {
                             const id = e.target.id.substring(14);
                             deleteServer(id);
                         });
-                        document.getElementById(`edit-server-${element.server_id}`).addEventListener('click', (e) => {
+                        server_list.querySelector(`#edit-server-${element.server_id}`).addEventListener('click', (e) => {
                             const id = e.target.id.substring(12);
                             updateServer(id);
                         });
@@ -409,12 +451,12 @@ function getAllServers() {
                                     </span>
                                 </li>`;
                         server_list.insertAdjacentHTML('beforeend', html);
-                        document.getElementById(`join-server-${element.server_id}`).addEventListener('click', (e) => {
+                        server_list.querySelector(`#join-server-${element.server_id}`).addEventListener('click', (e) => {
                             const id = e.target.id.substring(12);
                             joinServer(id);
                         });
                     }
-                    document.getElementById(`info-server-${element.server_id}`).addEventListener('click', (e) => {
+                    server_list.querySelector(`#info-server-${element.server_id}`).addEventListener('click', (e) => {
                         const id = e.target.id.substring(14);
                         showInfoServer(id);
                     });
@@ -430,15 +472,19 @@ function getAllServers() {
 }
 
 function getMyServers() {
-    fetch (`http://127.0.0.1:5000/servers`, {
+    fetch (`http://127.0.0.1:5000/servers/user`, {
         method: 'GET',
         credentials: 'include'
     }).then(response => {
         if (response.status === 200) {
+            showUserServersColumn();
+            //DISABLES THIS BUTTON TO AVOID OVERWRITING THE ALREADY FETCHED USER SERVERS LIST
+            document.getElementById('user-servers').disabled = true;
             return response.json().then(data => {
-                const server_list = document.getElementById('server-list');
-                server_list.innerHTML = ''
-                let html = ''
+                let server_list = document.getElementById('server-menu');
+                let html = `<ul id="server-list-${server_id}"></ul>`;
+                server_list.insertAdjacentHTML('beforeend', html);
+                server_list = document.getElementById('server-list');
                 data.forEach(element => {
                     if (element.owner) {
                         html = `<li id="server-${element.server_id}">
@@ -449,11 +495,11 @@ function getMyServers() {
                                     </span>
                                 </li>`;
                         server_list.insertAdjacentHTML('beforeend', html);
-                        document.getElementById(`delete-server-${element.server_id}`).addEventListener('click', (e) => {
+                        server_list.querySelector(`#delete-server-${element.server_id}`).addEventListener('click', (e) => {
                             const id = e.target.id.substring(14);
                             deleteServer(id);
                         });
-                        document.getElementById(`edit-server-${element.server_id}`).addEventListener('click', (e) => {
+                        server_list.querySelector(`#edit-server-${element.server_id}`).addEventListener('click', (e) => {
                             const id = e.target.id.substring(12);
                             updateServer(id);
                         });
@@ -466,13 +512,17 @@ function getMyServers() {
                                     </span>
                                 </li>`;
                         server_list.insertAdjacentHTML('beforeend', html);
-                        document.getElementById(`left-server-${element.server_id}`).addEventListener('click', (e) => {
+                        server_list.querySelector(`#left-server-${element.server_id}`).addEventListener('click', (e) => {
                             const id = e.target.id.substring(12);
                             leftServer(id);
                         });
                     }
-                    document.getElementById(`channels-server-${element.server_id}`).addEventListener('click', (e) => {
+                    server_list.querySelector(`#channels-server-${element.server_id}`).addEventListener('click', (e) => {
                         const id = e.target.id.substring(16);
+                        const buttons = document.getElementsByClassName('channels-server');
+                        buttons.forEach(btn => {    //ENABLE ALL DISABLED SERVER BUTTONS TO SHOW THEIR CHANNELS
+                            btn.disabled = false;                         
+                        });
                         getChannels(id);
                     });
                 });
@@ -480,13 +530,16 @@ function getMyServers() {
         }
         else {
             return response.json().then(data => {
-            alert(data.error);
+                alert(data.error);
+                const server_list = document.getElementById('server-menu');
+                const html = '<p>Please create a new server or join one.</p>';
+                server_list.insertAdjacentHTML('beforeend', html);
             });
         }
     });
 }
 
-function filterServer() {
+function filterServers() {
     const html = '<input type="text" id="server-name-search-input" placeholder="Type a server name..">';
     document.getElementById('server-list').insertAdjacentHTML('beforebegin', html);
     //TODO: SET THE FILTER FUNCTION
@@ -500,11 +553,11 @@ function filterServer() {
     });
 }
 
-function createChannel() {
+function createChannel(id) {
     data = {
-        server_id: null,
-        name: null,
-        description: null
+        server_id: document.getElementById('channel-name').value,
+        name: document.getElementById('channel-name').value,
+        description: document.getElementById('channel-description').value,
     };
     fetch ('http://127.0.0.1:5000/channels', {
         method: 'POST',
@@ -517,58 +570,45 @@ function createChannel() {
     .then(response => {
         if (response.status === 201) {
             return response.json().then(data => {
-                //TODO: INSERT ELEMENTS IN THE SERVER'S CHANNEL LIST
-            });
-        }
-        else {
-            return response.json().then(data => {
-            alert(data.error);
-            });
-        }
-    });
-}
-
-function getChannels(id) {
-    fetch (`http://127.0.0.1:5000/channels/server/${id}`, {
-        method: 'GET',
-        credentials: 'include'
-    }).then(response => {
-        if (response.status === 200) {
-            return response.json().then(data => {
-                const channel_list = document.getElementById('channel-list');
-                channel_list.innerHTML = ''
-                let html = ''
-                data.forEach(element => {
-                    if (element.owner) {
-                        html = `<li id="channel-${element.channel_id}">
-                                    <span class="option-btn-container channel-list-buttons">
-                                        <button class="chat-channel" id="chat-channel-${element.channel_id}">${element.name}</button>
-                                        <button class="edit-channel" id="edit-channel-${element.channel_id}"></button>
-                                        <button class="delete-channel" id="delete-channel-${element.channel_id}"></button>
-                                    </span>
-                                </li>`;
-                        channel_list.insertAdjacentHTML('beforeend', html);
-                        document.getElementById(`delete-channel-${element.channel_id}`).addEventListener('click', (e) => {
-                            const id = e.target.id.substring(15);
-                            deleteChannel(id);
-                        });
-                        document.getElementById(`edit-channel-${element.channel_id}`).addEventListener('click', (e) => {
-                            const id = e.target.id.substring(13);
-                            updateChannel(id);
+                fetch(`http://127.0.0.1:5000/servers/${datq.channel_id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include'
+                })
+                .then(resp => {
+                    if(resp.status === 200) {
+                        return resp.json().then(element => {
+                            const channel_list = document.getElementById('channel-list');
+                            let html;
+                            if(!channel_list){
+                                html = '<ul id="channel-list"></ul>';
+                                document.getElementById('channel-menu').insertAdjacentHTML('beforeend',html);
+                            }
+                            html = `<li id="channel-${element.channel_id}">
+                                            <span class="option-btn-container channel-list-buttons">
+                                                <button class="chat-channel" id="chat-channel-${element.channel_id}">${element.name}</button>
+                                                <button class="edit-channel" id="edit-channel-${element.channel_id}"></button>
+                                                <button class="delete-channel" id="delete-channel-${element.channel_id}"></button>
+                                            </span>
+                                        </li>`;
+                            channel_list.insertAdjacentHTML('beforeend', html);
+                            channel_list.querySelector(`#delete-channel-${element.channel_id}`).addEventListener('click', (e) => {
+                                const id = e.target.id.substring(14);
+                                deleteChannel(id);
+                            });
+                            channel_list.querySelector(`#edit-channel-${element.channel_id}`).addEventListener('click', (e) => {
+                                const id = e.target.id.substring(12);
+                                openChannelEditForm(id);
+                            });
                         });
                     }
                     else {
-                        html = `<li id="server-${element.channel_id}">
-                                    <span class="option-btn-container channel-list-buttons">
-                                    <button class="chat-channel" id="chat-channel-${element.channel_id}">${element.name}</button>
-                                    </span>
-                                </li>`;
-                        channel_list.insertAdjacentHTML('beforeend', html);
+                        return response.json().then(data => {
+                            alert(data.error);
+                        });
                     }
-                    document.getElementById(`chat-channel-${element.channel_id}`).addEventListener('click', (e) => {
-                        const id = e.target.id.substring(13);
-                        getChat(id);
-                    });
                 });
             });
         }
@@ -580,10 +620,68 @@ function getChannels(id) {
     });
 }
 
+function getChannels(server_id) {
+    fetch (`http://127.0.0.1:5000/channels/server/${id}`, {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => {
+        showChannelsColumn();
+        //DISABLE THE CURRENT SERVER BUTTON TO AVOID OVERWRITING THEIR CHANNELS LIST
+        document.getElementById(`channels-server-${server_id}`).disabled = true;
+        if (response.status === 200) {
+            const channel_list = document.getElementById('channel-menu');
+            return response.json().then(data => {
+                let html = `<ul id="channel-list-${server_id}"></ul>`;
+                channel_list.insertAdjacentHTML('beforeend', html);
+                data.forEach(element => {
+                    if (element.owner) {
+                        html = `<li id="channel-${element.channel_id}">
+                                    <span class="option-btn-container channel-list-buttons">
+                                        <button class="chat-channel" id="chat-channel-${element.channel_id}">${element.name}</button>
+                                        <button class="edit-channel" id="edit-channel-${element.channel_id}"></button>
+                                        <button class="delete-channel" id="delete-channel-${element.channel_id}"></button>
+                                    </span>
+                                </li>`;
+                        channel_list.insertAdjacentHTML('beforeend', html);
+                        channel_list.querySelector(`#delete-channel-${element.channel_id}`).addEventListener('click', (e) => {
+                            const id = e.target.id.substring(15);
+                            deleteChannel(id);
+                        });
+                        channel_list.querySelector(`#edit-channel-${element.channel_id}`).addEventListener('click', (e) => {
+                            const id = e.target.id.substring(13);
+                            openChannelEditForm(id);
+                        });
+                    }
+                    else {
+                        html = `<li id="server-${element.channel_id}">
+                                    <span class="option-btn-container channel-list-buttons">
+                                    <button class="chat-channel" id="chat-channel-${element.channel_id}">${element.name}</button>
+                                    </span>
+                                </li>`;
+                        channel_list.insertAdjacentHTML('beforeend', html);
+                    }
+                    channel_list.querySelector(`#chat-channel-${element.channel_id}`).addEventListener('click', (e) => {
+                        const id = e.target.id.substring(13);
+                        getChat(id);
+                    });
+                });
+            });
+        }
+        else {
+            return response.json().then(data => {
+                alert(data.error);
+                const html = '<p>Please create a channel</p>';
+                channel_list.insertAdjacentHTML('beforeend', html);
+            });
+        }
+    });
+}
+
 function updateChannel(id) {
     const data = {
-        name: null,
-        description: null
+        name: document.getElementById('channel-name').value,
+        description: document.getElementById('channel-description').value
     };
     fetch (`http://127.0.0.1:5000/channels/${id}`, {
         method: 'PUT',
@@ -594,8 +692,10 @@ function updateChannel(id) {
             credentials: 'include'
     }).then(response => {
         if (response.status === 200) {
-            return response.json().then(data => {
-                //TODO: UPDATE ELEMENTS IN SERVER LIST
+            return response.json().then(() => {
+                if(data.name){
+                    document.getElementById(`chat-channel-${id}`).innerHTML = data.name;
+                }
             });
         }
         else {
@@ -613,6 +713,7 @@ function deleteChannel(id) {
     }).then(response => {
         if (response.status === 204) {
             return response.json().then(data => {
+                document.getElementById(`channel-${id}`).remove();
                 //TODO: REMOVE ELEMENTS IN THE SERVER'S CHANNEL LIST
             });
         }
@@ -649,9 +750,46 @@ function showInfoChanel(id) {
     });
 }
 
+function openServerEditForm(id) {
+    fetch(`http://127.0.0.1:5000/servers/${id}`, {
+            method: 'GET',
+            credentials: 'include'
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return response.json().then(data => {
+                let content = document.getElementById('form-container');
+                content.innerHTML = `<span class="form-content">
+                                        <h3>Edit Server Data</h3>
+                                        <h5>Please insert the new data:</h5>
+                                        <p><input class="input-server-name" type="text" id="server-name" placeholder="Server name" required></p>
+                                        <p><textarea name="input-server-description" id="server-description" cols="30" rows="10"></textarea></p>
+                                        <span>
+                                            <p><input type="button" id="create-btn" value="Update"></p>
+                                            <p><input type="reset" id="cancel-btn" value="Cancel"></p>
+                                        </span>
+                                    </span>`
+                content.querySelector('#server-name').value = data.name;
+                content.querySelector('#server-description').value = data.description;
+                document.getElementById("create-btn").addEventListener("click", (event) => {
+                    // event.preventDefault();
+                    updateServer(id);
+                });
+                document.getElementById('cancel-btn').addEventListener('click', close_modal);
+                const element = document.getElementById('modal');
+                element.id = 'open-modal';
+            });
+        }
+        else {
+            return response.json().then(data => {
+                alert(data.error);
+            });
+        }
+    });
+    
+}
 
-
-function openServerForm() {
+function openServerCreateForm() {
     let content = document.getElementById('form-container');
     content.innerHTML = `<span class="form-content">
                             <h3>New Server</h3>
@@ -672,7 +810,7 @@ function openServerForm() {
     element.id = 'open-modal';
 }
 
-function openChannelForm() {
+function openChannelCreateForm(server_id) {
     let content = document.getElementById('form-container');
     content.innerHTML = `<span class="form-content">
                             <h3>New Channel</h3>
@@ -686,11 +824,49 @@ function openChannelForm() {
                         </span>`
     document.getElementById("create-btn").addEventListener("click", (event) => {
         // event.preventDefault();
-        createChannel();
+
+        createChannel(server_id);
     });
     document.getElementById('cancel-btn').addEventListener('click', close_modal);
     const element = document.getElementById('modal');
     element.id = 'open-modal';
+}
+
+function openChannelEditForm(id) {
+    fetch(`http://127.0.0.1:5000/channels/${id}`, {
+            method: 'GET',
+            credentials: 'include'
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return response.json().then(data => {
+                content.innerHTML = `<span class="form-content">
+                                        <h3>Edit Channel Data</h3>
+                                        <h5>Please insert the new data:</h5>
+                                        <p><input class="input-name" type="text" id="channel-name" placeholder="Channel name" required></p>
+                                        <p><textarea name="input-description" id="channel-description" cols="30" rows="10"></textarea></p>
+                                        <span>
+                                            <p><input type="button" id="create-btn" value="Update"></p>
+                                            <p><input type="reset" id="cancel-btn" value="Cancel"></p>
+                                        </span>
+                                    </span>`
+                content.querySelector('#server-name').value = data.name;
+                content.querySelector('#server-description').value = data.description;
+                document.getElementById("create-btn").addEventListener("click", (event) => {
+                    // event.preventDefault();
+                    updateChannel(id);
+                });
+                document.getElementById('cancel-btn').addEventListener('click', close_modal);
+                const element = document.getElementById('modal');
+                element.id = 'open-modal';
+            });
+        }
+        else {
+            return response.json().then(data => {
+                alert(data.error);
+            });
+        }
+    });
 }
 
 function close_modal() {
@@ -710,6 +886,64 @@ function animate_menu() {
         icon.id = 'open-menu-btn';         
     }
 };
+
+function showAllServersColumn() {
+    const html = `<nav class="navbar server-nav">
+                    <div class="menu" id="server-menu">
+                        <span class="option-btn-container">
+                            <button type="button" class="colapse-btn" onclick="animate_servers()" title="Colapse"></button>
+                            <span>
+                                <button type="button" class="option-btn-icon" id="search-server" title="Search"></button>
+                            </span>
+                        </span>
+                    </div>
+                </nav>`
+    const content = document.querySelector('.menu-container');
+    content.innerHTML = html;
+    document.getElementById('search-server').addEventListener('click', (e) => {
+        filterServers();
+    })
+}
+
+function showUserServersColumn() {
+    const html = `<nav class="navbar server-nav">
+                    <div class="menu" id="server-menu">
+                        <span class="option-btn-container">
+                            <button type="button" class="colapse-btn" onclick="animate_servers()" title="Colapse"></button>
+                            <span>
+                                <button type="button" class="option-btn-icon" id="search-server" title="Search"></button>
+                            </span>
+                            <span>
+                                <button type="button" class="option-btn-icon" id="new-server" onclick="openServerForm()" title="New"></button>
+                            </span>
+                        </span>
+                    </div>
+                </nav>`
+    const content = document.querySelector('.menu-container');
+    content.innerHTML = html;
+    document.getElementById('search-server').addEventListener('click', (e) => {
+        filterServers();
+    })
+}
+
+function showChannelsColumn(server_id) {
+    const html = `<nav class="navbar channel-nav">
+                    <div class="menu" id="channel-menu">
+                        <span class="option-btn-container">
+                            <button type="button" class="colapse-btn" onclick="animate_channels()" title="Colapse"></button>
+                            <span>
+                                <button type="button" class="option-btn-icon" id="new-channel-${server_id}" title="New"></button>
+                            </span>
+                        </span>
+                    </div>
+                </nav>`
+    const content = document.getElementsByClassName('server-nav')[0];
+    content.insertAdjacentHTML('afterend', html);
+    document.getElementById(`new-channel-${server_id}`).addEventListener('click', (e) => {
+        const server_id = e.target.id.substring(12);
+        createChannel(server_id);
+    });
+}
 
 function animate_servers() {
     elem = document.getElementsByClassName('navbar')[1];
@@ -738,8 +972,26 @@ function animate_channels() {
 };
 
 window.addEventListener('load', () => {
-    getChat();
-    document.getElementById('send').addEventListener('click', sendMessage);
+
+    document.getElementById('user-servers').addEventListener('click', getMyServers);
+    document.getElementById('all-servers').addEventListener('click', getAllServers);
+    // document.getElementById('user-servers').addEventListener('click', (e) => {
+    //     getMyServers().then(() => {
+    //         document.getElementsByClassName('colapse-btn')[0].click();
+    //         document.getElementById('all-servers').disabled = false;
+    //     });
+        
+    // });
+    // document.getElementById('all-servers').addEventListener('click', (e) => {
+    //     getAllServers().then(() => {
+    //         document.getElementsByClassName('colapse-btn')[0].click();
+    //         document.getElementById('user-servers').disabled = false;
+    //     });
+        
+    // });
+    // document.getElementById('user-servers').click();
+    // getChat();
+    // document.getElementById('send').addEventListener('click', sendMessage);
     // document.getElementById('message-input').addEventListener('keypress', (e) => {
     //     if (e.key == 'Enter') {
     //         e.preventDefault();

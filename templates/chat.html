@@ -17,12 +17,12 @@
     <nav class="navbar main" >
         <div class="menu" id="main-nav">
             <ul>
-                <li><a href="" title="Explore"><img class="icon-navbar" src="../assests/server-explore-icon-white.png" alt="">Explore</a></li>
+                <li><a title="Explore" id="all-servers"><img class="icon-navbar" src="../assests/server-explore-icon-white.png" alt="">Explore</a></li>
                 <!-- SHOULD ALLOW TO FIND ALL SERVERS IN DATABASE -->
-                <li><a href="" title="Servers"><img class="icon-navbar" src="../assests/server-icon-white.png" alt="">Servers</a></li>
+                <li><a title="Servers" id="user-servers"><img class="icon-navbar" src="../assests/server-icon-white.png" alt="">Servers</a></li>
                 <!-- SHOULD SHOWS ALL SERVERS OF THE LOGIN USER
                     ONCE A SERVER IS SELECTED IT SHOULD SHOW ALL ITS CHANNELS -->
-                <li><a href="" title="Direc Messages"><img class="icon-navbar" src="../assests/message-white.png" alt="">Direct Messages</a></li>
+                <li><a title="Direc Messages"><img class="icon-navbar" src="../assests/message-white.png" alt="">Direct Messages</a></li>
                 <!-- SHOULD SHOW THE CHAT OF THE CHANNEL SELECTED-->
             </ul>
             <a href="../templates/profile.html" title="Account" id="account"><img class="icon-navbar" src="../assests/user-white.png" alt="">Account</a>
@@ -30,7 +30,7 @@
     </nav>
     <main class="app">
         <div class="menu-container">
-            <nav class="navbar server-nav">
+            <!-- <nav class="navbar server-nav">
                 <div class="menu" id="server-menu">
                     <span class="option-btn-container">
                         <button type="button" class="colapse-btn" onclick="animate_servers()" title="Colapse"></button>
@@ -40,9 +40,9 @@
                         <span>
                             <button type="button" class="option-btn-icon" id="new-server" onclick="openServerForm()" title="New"></button>
                         </span>
-                    </span>
-                    <p>Please create or join in a server</p>
-                    <ul id="server-list">
+                    </span> -->
+                    <!-- <p>Please create or join in a server</p>
+                    <ul id="server-list"> -->
                         <!-- <li>SERVER 1</li>
                         <li>SERVER 2SERVERSERVERSERVERSERVER</li>
                         <li>SERVER 3</li>
@@ -51,22 +51,19 @@
                         <li>SERVER 6</li>
                         <li>SERVER 7SERVERSERVER</li>
                         <li>SERVER 8</li> -->
-                    </ul>
-                </div>
-            </nav>
-            <nav class="navbar channel-nav">
+                    <!-- </ul> -->
+                <!-- </div>
+            </nav> -->
+            <!-- <nav class="navbar channel-nav">
                 <div class="menu" id="channel-menu">
                     <span class="option-btn-container">
                         <button type="button" class="colapse-btn" onclick="animate_channels()" title="Colapse"></button>
                         <span>
-                            <button type="button" class="option-btn-icon" id="search-server" title="Search"></button>
+                            <button type="button" class="option-btn-icon" id="new-channel" onclick="openChannelForm()" title="New"></button>
                         </span>
-                        <span>
-                            <button type="button" class="option-btn-icon" id="new-server" onclick="openChannelForm()" title="New"></button>
-                        </span>
-                    </span>
-                    <p>Please create a channel</p>
-                    <ul id="channel-list">
+                    </span> -->
+                    <!-- <p>Please create a channel</p>
+                    <ul id="channel-list"> -->
                         <!-- <li>CHANNEL 1</li>
                         <li>CHANNEL 2</li>
                         <li>CHANNEL 3</li>
@@ -75,9 +72,9 @@
                         <li>CHANNEL 6</li>
                         <li>CHANNEL 7</li>
                         <li>CHANNEL 8</li> -->
-                    </ul>
-                </div>
-            </nav>
+                    <!-- </ul> -->
+                <!-- </div>
+            </nav> -->
         </div>
         <article class="chat">
             <div id="chat-header">CHANNEL NAME</div>
