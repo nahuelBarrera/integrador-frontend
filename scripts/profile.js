@@ -67,7 +67,7 @@ function update() {
             if (response.status === 200) {
                 return response.json().then(data => {
                     alert(data.message);
-                    window.location.href = "profile.html";
+                    document.getElementById('account').click();
                 });
             } else {
                 return response.json().then(data => {
@@ -97,8 +97,8 @@ function uploadFile() {
         .then(response => {
             if (response.status === 200) {
                 return response.json().then(data => {
-                    alert(data.message);
-                    window.location.href = "profile.html";
+                    document.getElementById('account').click();
+                    close_modal();
                 });
             } else {
                 return response.json().then(data => {
@@ -332,28 +332,81 @@ function open_prompt() {
     }
 }
 
+function showProfileContainer() {
+    const html = `<div id="profile-container">
+                        <article class="main-profile">
+                        <div id="profile-bg">
+                            <span>
+                                <a href="#" id="profile-photo"></a>
+                            </span>
+                            <button id="edit-btn">Edit photo</button>
+                            <div id="info-content" class="table">
+                                <form method="PUT" id="update-form">
+                                    <table>
+                                        <tr>
+                                            <td><span class=""> <strong>Username:</strong></span></td>
+                                            <td><span id="username"></span></td>
+                                            <td><a type="button" class="username edit " title="Edit"></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class=""> <strong>Email:</strong></span></td>
+                                            <td><span id="email"></span></td>
+                                            <td><a type="button" class="email edit " title="Edit"></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class=""> <strong>First Name:</strong></span></td>
+                                            <td><span id="first_name"></span></td>
+                                            <td><a type="button" class="first_name edit " title="Edit"></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class=""> <strong>Last Name:</strong></span></td>
+                                            <td><span id="last_name"></span></td>
+                                            <td><a type="button" class="last_name edit" title="Edit"></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class=""> <strong>Password:</strong></span></td>
+                                            <td><span id="password"></span></td>
+                                            <td><a type="button" class="password-reset" id='pass-btn' title="Edit"></a></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="container-btn">
+                                <input type="submit" form='update-form' id="update-btn" value="Update" disabled></input>
+                                <button id="logout-btn"><strong>Logout</strong></button>
+                            </div>
+                        </div>
+                    </article>
+                </div>`
+    document.querySelector('.app').innerHTML = html;
+}
+
 function close_modal() {
     element = document.getElementById('open-modal');
     element.id = 'modal';
 }
 
-window.addEventListener('load', () => {
+// window.addEventListener('load', () => {
+//     getProfile();
+// });
+
+document.getElementById('account').addEventListener('click', () => {
+    showProfileContainer();
     getProfile();
-});
+    document.getElementById('edit-btn').addEventListener('click', selectImage)
+    document.getElementById("logout-btn").addEventListener("click", logOut);
+    document.getElementById("pass-btn").addEventListener("click", open_modal);
+    // document.getElementById("pass-btn").addEventListener("click", open_prompt);
+    document.getElementById("update-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        update();
+    });
+    const edit_btn = document.getElementsByClassName("edit");
+    let array = Array.from(edit_btn);
+    array.forEach(element => {
+        element.addEventListener("click", edit);
+    });
+})
 
-document.getElementById('edit-btn').addEventListener('click', selectImage)
-document.getElementById("logout-btn").addEventListener("click", logOut);
-document.getElementById("pass-btn").addEventListener("click", open_modal);
-// document.getElementById("pass-btn").addEventListener("click", open_prompt);
-document.getElementById("update-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    update();
-});
-
-const edit_btn = document.getElementsByClassName("edit");
-let array = Array.from(edit_btn);
-array.forEach(element => {
-    element.addEventListener("click", edit);
-});
 
 // TODO: Avoid attempts to create a duplicated user at sign up form

@@ -1,5 +1,4 @@
 function sendMessage(id){
-    const chat = document.getElementById('msg-list');
     const input = document.getElementById('message-input');
     let data = {
         channel_id: id,
@@ -30,20 +29,26 @@ function sendMessage(id){
                 .then(resp => {
                     if(resp.status === 200) {
                         return resp.json().then(dat => {
-                            const html = 
-                                        `<li class="msg-bubble owner-bubble" id="bubble-${dat.message_id}">
+                            let chat = document.getElementById('msg-list');
+                            let html;
+                            if(!chat) {
+                                html = `<ul class="list" id="msg-list"></ul>`
+                                document.getElementById('chat-frame').innerHTML = html;
+                                chat = document.getElementById('msg-list');
+                            }    
+                            html = `<li class="msg-bubble owner-bubble" id="bubble-${dat.message_id}">
+                                        <span class="msg-head">
+                                            <h4 class="user"><strong>${dat.username}</strong></h4>
                                             <span>
-                                                <h4 class="user"><strong>${dat.username}</strong></h4>
-                                                <span>
-                                                    <a type="button" class="edit-msg" id="edit-${dat.message_id}" title="Edit"></a>
-                                                    <a type="button" class="delete-msg" id="delete-${dat.message_id}" title="Delete"></a>
-                                                </span> 
-                                            </span>
-                                            <p class="content">${dat.content}</p>
-                                            <span>
-                                                <p class="time">${dat.creation_date.substring(17, 22)}</p>
-                                            </span>
-                                        </li>`;
+                                                <a type="button" tabindex="0" class="edit-msg" id="edit-${dat.message_id}" title="Edit"></a>
+                                                <a type="button" tabindex="0" class="delete-msg" id="delete-${dat.message_id}" title="Delete"></a>
+                                            </span> 
+                                        </span>
+                                        <p class="content">${dat.content}</p>
+                                        <span class="sub-info">
+                                            <p class="time">${dat.creation_date.substring(17, 22)}</p>
+                                        </span>
+                                    </li>`;
                             chat.insertAdjacentHTML('afterbegin', html);
                             document.getElementById(`edit-${data.message_id}`).addEventListener('click', (e) => {
                                 const id = e.target.id.substring(5);
@@ -78,33 +83,30 @@ function sendMessage(id){
 }
 
 
-function getChat() {
-    fetch("http://127.0.0.1:5000/messages", {
+function getChat(channel_id, server_name, channel_name) {
+    fetch(`http://127.0.0.1:5000/messages/channel/${channel_id}`, {
         method: 'GET',
         credentials: 'include'
         //CREATE A BODY JSON REQUEST WITH CHANNEL_ID
     })
     .then(response => {
+        showChatContainer(channel_id, server_name, channel_name);
         if (response.status === 200) {
             return response.json().then(data => {
-                console.log(data);
                 const chat = document.getElementById('msg-list');
-                let options_html = '';
-                let bubble_id = '';
-                let cls = '';
-                data.forEach(msg => {
+                Array.from(data).forEach(msg => {
                     if (msg.owner) {
                         const html = `<li class="msg-bubble owner-bubble" id="bubble-${msg.message_id}">
-                                        <span>
+                                        <span class="msg-head">
                                             <h4 class="user"><strong>${msg.username}</strong></h4>
                                             <span>
-                                            <a type="button" class="edit-msg" id=edit-msg-${msg.message_id} title="Edit"></a>
-                                            <a type="button" class="delete-msg" id=delete-msg-${msg.message_id} title="Delete"></a>
+                                            <a type="button" tabindex="0" class="edit-msg" id=edit-msg-${msg.message_id} title="Edit"></a>
+                                            <a type="button" tabindex="0" class="delete-msg" id=delete-msg-${msg.message_id} title="Delete"></a>
                                             </span>
                                         </span>
                                         <p class="content">${msg.content}</p>
-                                        <span>
-                                            ${msg.edited ? "<p>(Edited)</p>" : ''}
+                                        <span class="sub-info">
+                                            ${msg.edited ? "<p class='edited-label'>(Edited)</p>" : ''}
                                             <p class="time">${msg.creation_date.substring(17, 22)}</p>
                                         </span>
                                     </li>`;
@@ -120,12 +122,12 @@ function getChat() {
                     }
                     else {
                         const html = `<li class="msg-bubble">
-                                        <span>
+                                        <span class="msg-head">
                                             <h4 class="user"><strong>${msg.username}</strong></h4>
                                         </span>
                                         <p class="content">${msg.content}</p>
-                                        <span>
-                                            ${msg.edited ? "<p>(Edited)</p>" : ''}
+                                        <span class="sub-info">
+                                            ${msg.edited ? "<p>Edited</p>" : ''}
                                             <p class="time">${msg.creation_date.substring(17, 22)}</p>
                                         </span>
                                     </li>`;
@@ -133,9 +135,10 @@ function getChat() {
                     }
                 });
             });
-        } else {
+        } 
+        else {
             return response.json().then(data => {
-                alert(data.error);
+                document.getElementById('chat-frame').innerHTML = `<h4 class="message-info">This chat is empty</h4>`;
             });
         }
     });
@@ -144,14 +147,13 @@ function getChat() {
     // });
 }
 
-function updateMessage(){
+function updateMessage(message_id, channel_id){
     const input = document.getElementById('message-input');
-    const id = document.getElementById('cancel-update').classList[0];
-    const bubble = document.getElementById(`bubble-${id}`);
+    const bubble = document.getElementById(`bubble-${message_id}`);
     const data = {
         content: input.value
     };
-    fetch(`http://127.0.0.1:5000/messages/${id}`, {
+    fetch(`http://127.0.0.1:5000/messages/${message_id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -162,13 +164,17 @@ function updateMessage(){
         if (response.status === 200) {
             return response.json().then(data => {
                 bubble.querySelector('.content').innerText = input.value;
-                bubble.querySelector('.time').insertAdjacentHTML('beforebegin', '<p>(Edited)</p>');
+                if(!bubble.querySelector('.edited-label')){
+                    bubble.querySelector('.time').insertAdjacentHTML('beforebegin', `<p id='edited-label'>(Edited)</p>`);
+                } 
                 document.getElementById('cancel-update').remove();
-                const send_btn = document.getElementById('update');
-                send_btn.id = 'send';
+                document.getElementById('update').remove();
                 input.value = '';
-                send_btn.removeEventListener('click', updateMessage);
-                send_btn.addEventListener('click', sendMessage);
+                const html = `<input type="submit" id="send" name="send" value=""></input>`
+                input.insertAdjacentHTML('afterend', html)
+                document.getElementById('send').addEventListener('click', (e) => {
+                    sendMessage(channel_id);
+                });
             });
         }
         else {
@@ -179,25 +185,31 @@ function updateMessage(){
     });
 }
 
-function editMessage(id) {
+function editMessage(message_id, channel_id) {
     const input = document.getElementById('message-input');
-    const parent = document.getElementById(`bubble-${id}`);
+    const parent = document.getElementById(`bubble-${message_id}`);
     const content = parent.querySelector('.content')
     input.value = content.innerText;
-    const send_btn = document.getElementById('send');
-    send_btn.id = 'update';
-    const html = `
-        <input type="reset" class="${id}" id="cancel-update" name="cancel" value="">
+    let send_btn = document.getElementById('send');
+    send_btn.remove();
+    let html = `
+        <input type="reset" id="cancel-update" name="cancel" value="">
+        <input type="submit" id="update" name="send" value="">
                 `
     input.insertAdjacentHTML('afterend', html);
-    send_btn.removeEventListener('click', sendMessage);
-    send_btn.addEventListener('click', updateMessage);
-    document.getElementById('cancel-update').addEventListener('click', () => {
+    send_btn = document.getElementById('update');
+    send_btn.addEventListener('click', () => {
+        updateMessage(message_id,channel_id)
+    });
+    document.getElementById('cancel-update').addEventListener('click', (e) => {
+        e.target.remove();
         input.value = '';
-        send_btn.id = 'send';
-        document.getElementById('cancel-update').remove();
-        send_btn.removeEventListener('click', updateMessage);
-        send_btn.addEventListener('click', sendMessage);
+        send_btn.remove();
+        html = `<input type="submit" id="send" name="send" value=""></input>`
+        input.insertAdjacentHTML('afterend', html)
+        document.getElementById('send').addEventListener('click', (e) => {
+            sendMessage(channel_id);
+        });
     });
 }
 
@@ -242,9 +254,9 @@ function createServer() {
                 }
                 html = `<li id="server-${data.server_id}">
                         <span class="option-btn-container server-list-buttons">
-                            <button class="channels-server" id="channels-server-${data.server_id}">${server.name}</button>
-                            <button class="edit-server" id="edit-server-${data.server_id}">edit</button>
-                            <button class="delete-server" id="delete-server-${data.server_id}">delete</button>
+                            <a class="channels-server menu-a" tabindex="0" id="channels-server-${data.server_id}"><span title="${server.name}"></span><p class="p-title" id="server-name-${data.server_id}">${server.name}</p></a>
+                            <button class="option-btn-icon small-btn edit-server" id="edit-server-${data.server_id}" title="Edit"></button>
+                            <button class="option-btn-icon small-btn delete-server" id="delete-server-${data.server_id}" title="Delete"></button>
                         </span>
                     </li>`;
                 server_list.insertAdjacentHTML('beforeend', html);
@@ -284,7 +296,7 @@ function updateServer(id) {
         if (response.status === 200) {
             return response.json().then(() => {
                 if(data.name) {
-                    document.getElementById(`channels-server-${id}`).innerHTML = data.name;
+                    document.getElementById(`server-name-${id}`).innerText = data.name;
                 }
                 close_modal();
             });
@@ -299,23 +311,36 @@ function updateServer(id) {
 }
 
 function showInfoServer(id) {
-    console.log(id);
     fetch (`http://127.0.0.1:5000/servers/${id}`, {
         method: 'GET',
         credentials: 'include'
     }).then(response => {
         if (response.status === 200) {
             return response.json().then(data => {
-                let content = document.getElementById('form-container');
-                content.innerHTML = `<span class="form-content">
-                                        <h3>Server info</h3>
-                                        <h5>Name: ${data.name}</h5>
-                                        <h5>Owner: ${data.owner}</h5>
-                                        <h5>Members: ${data.members}</h5>
-                                        <h5>Created: ${data.creation_date}</h5>
-                                    </span>`
-                const element = document.getElementById('modal');
-                element.id = 'open-modal';
+                console.log(data);
+                console.log(data.user_id);
+                fetch(`http://127.0.0.1:5000/users/${data.user_id}`, {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json().then(user => {
+                            let content = document.getElementById('form-container');
+                            content.innerHTML = `<span class="form-content">
+                                                    <h3>Server info</h3>
+                                                    <h5>Name:  ${data.name}</h5>
+                                                    <h5>Owner:  ${user.first_name ? user.first_name : ''} ${user.last_name ? user.last_name : ''} (${user.username})</h5>
+                                                    <h5>Members:  ${data.members}</h5>
+                                                    <h5>Created:  ${data.creation_date}</h5>
+                                                    <h5>Description:</h5>
+                                                    <p>${data.description ? data.description : ''}</p>
+                                                </span>`
+                            const element = document.getElementById('modal');
+                            element.id = 'open-modal';
+                        });
+                    }
+                });
             });
         }
         else {
@@ -341,18 +366,13 @@ function joinServer(id) {
         if (response.status === 201) {
             return response.json().then(data => {
                 const server = document.getElementById(`server-${id}`);
-                console.log(server);
                 const btn = server.querySelector(`#join-server-${id}`);
-                console.log(btn)
-                btn.classList.remove('join-server');
-                btn.classList.add('left-server');
                 btn.id = `left-server-${id}`;
-                btn.innerText = 'left'
+                btn.classList.replace('join-server', 'left-server');
                 btn.addEventListener('click', (e) => {
                     const id = e.target.id.substring(12);
                     leftServer(id);
                 });
-                //TODO: IN THE BACKEND ADD THE USER ID FROM SESSION TO LINK WITH THE SERVER ID
             });
         }
         else {
@@ -381,10 +401,8 @@ function leftServer(id) {
             else {
                 console.log(false);
                 column = elem.querySelector(`#left-server-${id}`);
-                column.classList.remove('left-server');
-                column.classList.add('join-server');
                 column.id = `join-server-${id}`;
-                column.innerText = 'join';
+                column.classList.replace('left-server', 'join-server');
                 column.addEventListener('click', (e) => {
                     const id = e.target.id.substring(12);
                     joinServer(id);
@@ -429,20 +447,20 @@ function getAllServers() {
     }).then(response => {
         showAllServersColumn();
         document.getElementById('all-servers').disabled = true;
-        let server_list = document.getElementById('server-menu');
+        let server_list = document.querySelector('.list-container');
         if (response.status === 200) {
             return response.json().then(data => {
                 let html = `<ul id="server-list"></ul>`;
-                server_list.insertAdjacentHTML('beforeend', html);
+                server_list.innerHTML = html;
                 server_list = document.getElementById('server-list');
                 data.forEach(element => {
                     if (element.role_id) {
                         if(element.role_id == 1){
                             html = `<li id="server-${element.server_id}">
                                         <span class="option-btn-container server-list-buttons">
-                                            <button class="info-server" id="info-server-${element.server_id}">${element.name}</button>
-                                            <button class="edit-server" id="edit-server-${element.server_id}">edit</button>
-                                            <button class="delete-server" id="delete-server-${element.server_id}">delete</button>
+                                            <a class="info-server menu-a" tabindex="0" id="info-server-${element.server_id}"><span title="${element.name}"></span><p class="p-title" id="server-name-${element.server_id}">${element.name}</p></a>
+                                            <button class="option-btn-icon small-btn edit-server" id="edit-server-${element.server_id}" title="Edit"></button>
+                                            <button class="option-btn-icon small-btn delete-server" id="delete-server-${element.server_id}" title="Delete"></button>
                                         </span>
                                     </li>`;
                             server_list.insertAdjacentHTML('beforeend', html);
@@ -458,8 +476,8 @@ function getAllServers() {
                         else {
                             html = `<li id="server-${element.server_id}">
                                         <span class="option-btn-container server-list-buttons">
-                                            <button class="info-server" id="info-server-${element.server_id}">${element.name}</button>
-                                            <button class="left-server" id="left-server-${element.server_id}">left</button>
+                                            <a class="info-server menu-a" tabindex="0" id="info-server-${element.server_id}"><span title="${element.name}"></span><p class="p-title" id="server-name-${element.server_id}">${element.name}</p></a>
+                                            <button class="option-btn-icon small-btn left-server" id="left-server-${element.server_id}" title="Left"></button>
                                         </span>
                                     </li>`;
                             server_list.insertAdjacentHTML('beforeend', html);
@@ -473,8 +491,8 @@ function getAllServers() {
                     else {
                         html = `<li id="server-${element.server_id}">
                                     <span class="option-btn-container server-list-buttons">
-                                        <button class="info-server" id="info-server-${element.server_id}">${element.name}</button>
-                                        <button class="join-server" id="join-server-${element.server_id}">join</button>
+                                        <a class="info-server menu-a" tabindex="0" id="info-server-${element.server_id}"><span></span><p class="p-title" id="server-name-${element.server_id}">${element.name}</p></a>
+                                        <button class="option-btn-icon small-btn join-server" id="join-server-${element.server_id}" title="Join"></button>
                                     </span>
                                 </li>`;
                         server_list.insertAdjacentHTML('beforeend', html);
@@ -494,7 +512,7 @@ function getAllServers() {
             return response.json().then(data => {
                 const html = `<h4>There is no any server</h4>
                                 <p>Please create or join a server</p>`;
-                server_list.insertAdjacentHTML('beforeend', html);
+                server_list.innerHTML = html;
             });
         }
     });
@@ -508,19 +526,19 @@ function getMyServers() {
         showUserServersColumn();
         if (response.status === 200) {
             //DISABLES THIS BUTTON TO AVOID OVERWRITING THE ALREADY FETCHED USER SERVERS LIST
-            document.getElementById('user-servers').disabled = true;
+            // document.getElementById('user-servers').disabled = true;
             return response.json().then(data => {
-                let server_list = document.getElementById('server-menu');
+                let server_list = document.querySelector('.list-container');
                 let html = `<ul id="server-list"></ul>`;
-                server_list.insertAdjacentHTML('beforeend', html);
+                server_list.innerHTML = html;
                 server_list = document.getElementById('server-list');
                 data.forEach(element => {
                     if (element.owner) {
                         html = `<li id="server-${element.server.server_id}">
                                     <span class="option-btn-container server-list-buttons">
-                                        <button class="channels-server" id="channels-server-${element.server.server_id}">${element.server.name}</button>
-                                        <button class="edit-server" id="edit-server-${element.server.server_id}">edit</button>
-                                        <button class="delete-server" id="delete-server-${element.server.server_id}">delete</button>
+                                        <a class="channels-server menu-a" tabindex="0" id="channels-server-${element.server.server_id}"><span id="icon-server-${element.server.server_id}" title="${element.server.name}"></span><p class="p-title" id="server-name-${element.server.server_id}">${element.server.name}</p></a>
+                                        <button class="option-btn-icon small-btn edit-server" id="edit-server-${element.server.server_id}" title="Edit"></button>
+                                        <button class="option-btn-icon small-btn delete-server" id="delete-server-${element.server.server_id}" title="Delete"></button>
                                     </span>
                                 </li>`;
                         server_list.insertAdjacentHTML('beforeend', html);
@@ -536,8 +554,8 @@ function getMyServers() {
                     else {
                         html = `<li id="server-${element.server.server_id}">
                                     <span class="option-btn-container server-list-buttons">
-                                        <button class="channels-server" id="channels-server-${element.server.server_id}">${element.server.name}</button>
-                                        <button class="left-server" id="left-server-${element.server.server_id}">left</button>
+                                        <a class="channels-server menu-a" tabindex="0" id="channels-server-${element.server.server_id}"><span class="icon-server-span" id="icon-server-${element.server.server_id}" title="${element.server.name}"></span><p class="p-title" id="server-name-${element.server.server_id}">${element.server.name}</p></a>
+                                        <button class="option-btn-icon small-btn left-server" id="left-server-${element.server.server_id}" title="Left"></button>
                                     </span>
                                 </li>`;
                         server_list.insertAdjacentHTML('beforeend', html);
@@ -547,22 +565,31 @@ function getMyServers() {
                         });
                     }
                     server_list.querySelector(`#channels-server-${element.server.server_id}`).addEventListener('click', (e) => {
-                        const id = e.target.id.substring(16);
+                        console.log(e.target);
+                        let id;
+                        if(e.target.classList.contains('menu-a')){
+                            id = e.target.id.substring(16);
+                        }
+                        else {
+                            id = e.target.id.substring(12);
+                        }
                         const buttons = document.getElementsByClassName('channels-server');
-                        Array.from(buttons).forEach(btn => {    //ENABLE ALL DISABLED SERVER BUTTONS TO SHOW THEIR CHANNELS
-                            btn.disabled = false;                
-                        });
-                        getChannels(id);
+                        // Array.from(buttons).forEach(btn => {    //ENABLE ALL DISABLED SERVER BUTTONS TO SHOW THEIR CHANNELS
+                        //     btn.disabled = false;                
+                        // });
+                        const server_name = document.getElementById(`server-name-${id}`).innerText;
+                        getChannels(id, server_name);
+                        
                     });
                 });
             });
         }
         else {
             return response.json().then(data => {
-                const server_list = document.getElementById('server-menu');
+                const server_list = document.querySelector('.list-container');
                 const html = `<h4>There is no any server</h4>
                             <p>Please create or join a server</p>`;
-                server_list.insertAdjacentHTML('beforeend', html);
+                server_list.innerHTML = html;
             });
         }
     });
@@ -582,7 +609,7 @@ function filterServers() {
     });
 }
 
-function createChannel(id) {
+function createChannel(id, server_name) {
     channel = {
         server_id: id,
         name: document.getElementById('channel-name').value,
@@ -599,30 +626,9 @@ function createChannel(id) {
     .then(response => {
         if (response.status === 201) {
             return response.json().then(data => {
-                let channel_list = document.getElementById(`channel-list-${id}`);
-                let html;
-                if(!channel_list){
-                    html = `<ul id="channel-list-${id}"></ul>`;
-                    document.getElementById('channel-menu').insertAdjacentHTML('beforeend',html);
-                    channel_list = document.getElementById(`channel-list-${id}`);
-                }
-                html = `<li id="channel-${data.channel_id}">
-                                <span class="option-btn-container channel-list-buttons">
-                                    <button class="chat-channel" id="chat-channel-${data.channel_id}">${channel.name}</button>
-                                    <button class="edit-channel" id="edit-channel-${data.channel_id}">edit</button>
-                                    <button class="delete-channel" id="delete-channel-${data.channel_id}">delete</button>
-                                </span>
-                            </li>`;
-                channel_list.insertAdjacentHTML('beforeend', html);
-                channel_list.querySelector(`#delete-channel-${data.channel_id}`).addEventListener('click', (e) => {
-                    const id = e.target.id.substring(14);
-                    deleteChannel(id);
-                });
-                channel_list.querySelector(`#edit-channel-${data.channel_id}`).addEventListener('click', (e) => {
-                    const id = e.target.id.substring(12);
-                    openChannelEditForm(id);
-                });
                 close_modal();
+                getChannels(id, server_name);
+
             });
         }
         else {
@@ -634,28 +640,29 @@ function createChannel(id) {
     
 }
 
-function getChannels(server_id) {
+function getChannels(server_id, server_name) {
     fetch (`http://127.0.0.1:5000/channels/server/${server_id}`, {
         method: 'GET',
         credentials: 'include'
     })
     .then(response => {
-        showChannelsColumn(server_id);
+        console.log(server_id);
+        showChannelsColumn(server_id, server_name);
         //DISABLE THE CURRENT SERVER BUTTON TO AVOID OVERWRITING THEIR CHANNELS LIST
-        document.getElementById(`channels-server-${server_id}`).disabled = true;
-        let channel_list = document.getElementById('channel-menu');
+        // document.getElementById(`channels-server-${server_id}`).disabled = true;
+        let channel_list = document.getElementsByClassName('list-container')[1];
         if (response.status === 200) {
             return response.json().then(data => {
                 let html = `<ul id="channel-list-${server_id}"></ul>`;
-                channel_list.insertAdjacentHTML('beforeend', html);
+                channel_list.innerHTML = html;
                 channel_list = channel_list.querySelector(`#channel-list-${server_id}`);
                 data.forEach(element => {
                     if (element.owner) {
                         html = `<li id="channel-${element.channel.channel_id}">
                                     <span class="option-btn-container channel-list-buttons">
-                                        <button class="chat-channel" id="chat-channel-${element.channel.channel_id}">${element.channel.name}</button>
-                                        <button class="edit-channel" id="edit-channel-${element.channel.channel_id}">edit</button>
-                                        <button class="delete-channel" id="delete-channel-${element.channel.channel_id}">delete</button>
+                                        <a class="chat-channel menu-a" tabindex="0" id="chat-channel-${element.channel.channel_id}"><span class="channel-icon" id="channel-icon-${element.channel.channel_id}" title="${element.channel.name}"></span><p class="p-title" id="channel-name-${element.channel.channel_id}">${element.channel.name}</p></a>
+                                        <button class="option-btn-icon small-btn edit-channel" id="edit-channel-${element.channel.channel_id}" title="Edit"></button>
+                                        <button class="option-btn-icon small-btn delete-channel" id="delete-channel-${element.channel.channel_id}" title="Delete"></button>
                                     </span>
                                 </li>`;
                         channel_list.insertAdjacentHTML('beforeend', html);
@@ -671,14 +678,15 @@ function getChannels(server_id) {
                     else {
                         html = `<li id="server-${element.channel.channel_id}">
                                     <span class="option-btn-container channel-list-buttons">
-                                    <button class="chat-channel" id="chat-channel-${element.channel.channel_id}">${element.channel.name}</button>
+                                    <a class="chat-channel menu-a" tabindex="0" id="chat-channel-${element.channel.channel_id}"><span class="channel-icon" id="channel-icon-${element.channel.channel_id}" title="${element.channel.name}"></span><p class="p-title" id="channel-name-${element.channel.channel_id}">${element.channel.name}</p></a>
                                     </span>
                                 </li>`;
                         channel_list.insertAdjacentHTML('beforeend', html);
                     }
                     channel_list.querySelector(`#chat-channel-${element.channel.channel_id}`).addEventListener('click', (e) => {
                         const id = e.target.id.substring(13);
-                        getChat(id);
+                        const channel_name = document.getElementById(`channel-name-${id}`).innerText;
+                        getChat(id, server_name, channel_name);
                     });
                 });
             });
@@ -687,7 +695,7 @@ function getChannels(server_id) {
             return response.json().then(data => {
                 const html = `<h4>There is no any channel</h4>
                             <p>Please create a channel</p>`;
-                channel_list.insertAdjacentHTML('beforeend', html);
+                channel_list.innerHTML = html;
             });
         }
     });
@@ -709,7 +717,7 @@ function updateChannel(id) {
         if (response.status === 200) {
             return response.json().then(() => {
                 if(data.name){
-                    document.getElementById(`chat-channel-${id}`).innerHTML = data.name;
+                    document.getElementById(`channel-name-${id}`).innerText = data.name;
                 }
                 close_modal();
             });
@@ -728,6 +736,10 @@ function deleteChannel(id) {
     }).then(response => {
         if (response.status === 204) {
             document.getElementById(`channel-${id}`).remove();
+            const chat = document.querySelector('.chat');
+            if(chat){
+                chat.remove();
+            }
             //TODO: REMOVE ELEMENTS IN THE SERVER'S CHANNEL LIST
         }
         else {
@@ -749,6 +761,8 @@ function showInfoChanel(id) {
                                         <h3>Channel info</h3>
                                         <h5>Name: ${data.name}</h5>
                                         <h5>Created: ${data.creation_date}</h5>
+                                        <h5>Description:</h5>
+                                        <p>${data.description ? data.description : ''}</p>
                                     </span>`
                 const element = document.getElementById('modal');
                 element.id = 'open-modal';
@@ -821,7 +835,7 @@ function openServerCreateForm() {
     element.id = 'open-modal';
 }
 
-function openChannelCreateForm(server_id) {
+function openChannelCreateForm(server_id, server_name) {
     let content = document.getElementById('form-container');
     content.innerHTML = `<span class="form-content">
                             <h3>New Channel</h3>
@@ -835,8 +849,8 @@ function openChannelCreateForm(server_id) {
                         </span>`
     document.getElementById("create-btn").addEventListener("click", (event) => {
         // event.preventDefault();
-
-        createChannel(server_id);
+        console.log(server_id);
+        createChannel(server_id, server_name);
     });
     document.getElementById('cancel-btn').addEventListener('click', close_modal);
     const element = document.getElementById('modal');
@@ -862,8 +876,8 @@ function openChannelEditForm(id) {
                                             <p><input type="reset" id="cancel-btn" value="Cancel"></p>
                                         </span>
                                     </span>`
-                content.querySelector('#server-name').value = data.name;
-                content.querySelector('#server-description').value = data.description;
+                content.querySelector('#channel-name').value = data.name;
+                content.querySelector('#channel-description').value = data.description;
                 content.querySelector("#create-btn").addEventListener("click", (event) => {
                     // event.preventDefault();
                     updateChannel(id);
@@ -900,10 +914,11 @@ function animate_menu() {
 };
 
 function showAllServersColumn() {
-    // let content = document.querySelector('.server-nav')
-    // if(content) {
-    //     content.remove();
-    // }
+    document.querySelector('.app').innerHTML = '<div class="menu-container">';
+    let content = document.querySelector('.chat')
+    if(content) {
+        content.remove();
+    }
     const html = `<nav class="navbar server-nav all-servers">
                     <div class="menu" id="server-menu">
                         <span class="option-btn-container">
@@ -912,20 +927,23 @@ function showAllServersColumn() {
                                 <button type="button" class="option-btn-icon" id="search-server" title="Search"></button>
                             </span>
                         </span>
+                        <div class="list-container"></div>
                     </div>
                 </nav>`
-    const content = document.querySelector('.menu-container');
+    content = document.querySelector('.menu-container');
     content.innerHTML = html;
     document.getElementById('search-server').addEventListener('click', (e) => {
         filterServers();
-    })
+    });
+    document.getElementById('server-menu').querySelector('.colapse-btn').click();
 }
 
 function showUserServersColumn() {
-    // let content = document.querySelector('.server-nav')
-    // if(content) {
-    //     content.remove();
-    // }
+    document.querySelector('.app').innerHTML = '<div class="menu-container">';
+    let content = document.querySelector('.chat')
+    if(content) {
+        content.remove();
+    }
     const html = `<nav class="navbar server-nav user-servers">
                     <div class="menu" id="server-menu">
                         <span class="option-btn-container">
@@ -937,17 +955,23 @@ function showUserServersColumn() {
                                 <button type="button" class="option-btn-icon" id="new-server" onclick="openServerCreateForm()" title="New"></button>
                             </span>
                         </span>
+                        <div class="list-container"></div>
                     </div>
                 </nav>`
-    const content = document.querySelector('.menu-container');
+    content = document.querySelector('.menu-container');
     content.innerHTML = html;
     document.getElementById('search-server').addEventListener('click', (e) => {
         filterServers();
-    })
+    });
+    document.getElementById('server-menu').querySelector('.colapse-btn').click();
 }
 
-function showChannelsColumn(server_id) {
-    let content = document.querySelector('.channel-nav')
+function showChannelsColumn(server_id, server_name) {
+    let content = document.querySelector('.chat')
+    if(content) {
+        content.remove();
+    }
+    content = document.querySelector('.channel-nav')
     if(content) {
         content.remove();
     }
@@ -956,17 +980,55 @@ function showChannelsColumn(server_id) {
                         <span class="option-btn-container">
                             <button type="button" class="colapse-btn" onclick="animate_channels()" title="Colapse"></button>
                             <span>
-                                <button type="button" class="option-btn-icon" id="new-channel-${server_id}" title="New">New+</button>
+                                <button type="button" class="option-btn-icon add-channel-btn" id="new-channel-${server_id}" title="New channel"></button>
                             </span>
                         </span>
+                        <div class="list-container"></div>
                     </div>
                 </nav>`
     content = document.getElementsByClassName('server-nav')[0];
     content.insertAdjacentHTML('afterend', html);
     document.getElementById(`new-channel-${server_id}`).addEventListener('click', (e) => {
+        console.log(e.target.id)
         const server_id = e.target.id.substring(12);
-        openChannelCreateForm(server_id);
+        openChannelCreateForm(server_id, server_name);
     });
+    document.getElementById('channel-menu').querySelector('.colapse-btn').click();
+}
+
+function showChatContainer(channel_id, server_name, channel_name) {
+    let content = document.querySelector('.chat')
+    if(content) {
+        content.remove();
+    }
+    const html = `<article class="chat" id="chat-channel-${channel_id}">
+                    <div id="chat-header"><a class="info-channel menu-a" tabindex="0" id="info-channel-${channel_id}">Info</a><h3>${server_name} - ${channel_name}</3></div>
+                    <div id="chat-frame">
+                        <ul class="list" id="msg-list">
+                        </ul>
+                    </div>
+                    <div id="typing-bar">
+                        <input type="text" id="message-input">
+                        <input type="submit" id="send" name="send" value="">
+                    </div>
+                </article>`
+    content = document.querySelector('.app');
+    content.insertAdjacentHTML('beforeend', html);
+    document.getElementById('send').addEventListener('click', (e) => {
+        sendMessage(channel_id);
+    });
+    content.querySelector('.info-channel').addEventListener('click', (e) => {
+        const id = e.target.id.substring(13);
+        showInfoChanel(id);
+    });
+    document.getElementById('message-input').addEventListener('keypress', (e) => {
+        if (e.key == 'Enter') {
+            e.preventDefault();
+            document.getElementById("send").click();
+            document.getElementById('message-input').value = ''
+        }
+    });
+
 }
 
 function animate_servers() {
@@ -996,9 +1058,9 @@ function animate_channels() {
 };
 
 window.addEventListener('load', () => {
-
     document.getElementById('user-servers').addEventListener('click', getMyServers);
     document.getElementById('all-servers').addEventListener('click', getAllServers);
+    getMyServers()
     // document.getElementById('user-servers').addEventListener('click', (e) => {
     //     getMyServers().then(() => {
     //         document.getElementsByClassName('colapse-btn')[0].click();
@@ -1015,12 +1077,4 @@ window.addEventListener('load', () => {
     // });
     // document.getElementById('user-servers').click();
     // getChat();
-    // document.getElementById('send').addEventListener('click', sendMessage);
-    // document.getElementById('message-input').addEventListener('keypress', (e) => {
-    //     if (e.key == 'Enter') {
-    //         e.preventDefault();
-    //         document.getElementById("send").click();
-    //         document.getElementById('message-input').value = ''
-    //     }
-    // });
 });
