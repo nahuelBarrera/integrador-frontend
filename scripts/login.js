@@ -15,7 +15,7 @@ function logIn() {
             if (response.status === 200) {
                 return response.json().then(data => {
                     alert(data.message);
-                    window.location.href = "profile.html";
+                    window.location.href = "chat.html";
                 });
             } else {
                 return response.json().then(data => {
@@ -47,7 +47,7 @@ function signUp() {
             if (response.status === 201) {
                 return response.json().then(data => {
                     alert('You have successfully signed up');
-                    window.location.href = "profile.html";
+                    window.location.href = "chat.html";
                 });
             } else {
                 return response.json().then(data => {

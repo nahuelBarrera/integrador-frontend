@@ -42,6 +42,7 @@ body {
     justify-content: space-between;
     padding: 0 1rem;
     margin-top: -4rem;
+    z-index: 1;
 }
 
 .header a {
@@ -121,7 +122,7 @@ body {
 }
 
 .navbar {
-    grid-template-columns: 0.3fr;
+    grid-template-columns: 0.4fr;
     display: grid;
     transition: grid-template-columns 200ms;
     width: max-content;
@@ -169,6 +170,24 @@ body {
     
 }
 
+.menu p {
+    text-align: center;
+    margin: 0rem;
+}
+
+.p-title {
+    margin: 0;
+    max-width: 7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.list-container li {
+    margin-left: 0rem;
+    margin-right: -1rem;
+}
+
 #main-nav {
     margin-right: -2rem;
 }
@@ -193,7 +212,7 @@ body {
     margin-right: 0.5rem;
 }
 
-.menu a {
+.menu-a {
     background-color: rgba(65, 65, 65, 0.5);
     text-align: start;
     color: aliceblue;
@@ -203,27 +222,42 @@ body {
     padding: 0.5rem;
 }
 
-.menu a:hover {
+.menu-a:hover {
     background-color: #8C52FF;
     color: aliceblue;
 }
 
+.menu-a:focus-within {
+    background-color: #8C52FF;
+}
+
+#chat-header {
+    display: flex;
+}
+
 #server-menu {
     /* grid-area: servers; */
-    max-width: 20rem;
+    max-width: 28rem;
 }
 
 #channel-menu {
     /* grid-area: channels; */
-    max-width: 20rem;
+    max-width: 28rem;
 }
 
 #server-menu, #channel-menu {
     color: aliceblue;
     grid-row: auto;
     justify-content: start;
-    padding: 0 0.5rem;
-    min-width: 3rem;
+    padding: 0;
+    min-width: 2.7rem;
+    
+}
+
+.list-container {
+    max-height: 100%;
+    position: unset;
+    padding-right: 1rem;
 }
 
 .option-btn-container {
@@ -252,6 +286,107 @@ body {
 
 .option-btn-container span:hover {
     background-color: #8C52FF;
+}
+
+.option-btn-container {
+    text-align: start;
+    color: aliceblue;
+    text-decoration: none;
+    display: inline-block;
+    align-items: center;
+    padding: 0.3rem;
+    border: none;
+}
+
+/* .info-server:hover, .channels-server:hover, .chat-channel:hover {
+    background-color: #8C52FF;
+} */
+
+.info-server span, .channels-server span,
+.chat-channel span {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.info-server span, .channels-server span{
+    background-image: url('../assests/server-icon-white.png');
+}
+
+.server-list-buttons, .channel-list-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.list-container ul {
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    position: absolute;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    overflow-y: scroll;
+    display: contents;
+}
+
+#server-list::-webkit-scrollbar , #channel-list::-webkit-scrollbar {
+    display: none; 
+}
+
+.small-btn {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+.small-btn:hover {
+    background-color: #8C52FF;
+}
+
+.edit-server {
+    background-image: url('../assests/server-config-icon-white.png');
+}
+
+.delete-server {
+    background-image: url('../assests/server-delete-icon-white.png');
+}
+
+.join-server {
+    background-image: url('../assests/create-white.png');
+}
+
+.left-server {
+    background-image: url('../assests/delete-white.png');
+}
+
+.edit-channel {
+    background-image: url('../assests/edit-white.png');
+    margin-right: 0;
+}
+
+.delete-channel {
+    background-image: url('../assests/delete-white.png');
+    margin-right: 0;
+}
+
+.add-channel-btn {
+    background-image: url('../assests/create-white.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+}
+
+.chat-channel span {
+    background-image: url('../assests/message-white.png');
 }
 
 .chat {
@@ -370,7 +505,7 @@ body {
     align-items: center;
 }
 
-.msg-bubble > span {
+.msg-head {
     justify-content: space-between;
 }
 
@@ -415,9 +550,14 @@ body {
     text-align: start;
 }
 
-.time {
+.sub-info {
+    justify-content: end;
     text-align: end;
     font-size: 0.8rem;
+}
+
+.time {
+    margin-left: 1rem;
 }
 
 li {
@@ -425,7 +565,7 @@ li {
     margin: 0 1rem;
 }
 
-.input-text {
+.input-text, .input-pass {
     border: 1px solid;
     padding: 0.1rem;
     border-radius: 0.2rem;
@@ -511,8 +651,20 @@ li {
 }
 
 .form-content p {
-    margin: 1rem;
+    margin: 0rem;
+    max-width: 20rem;
+    text-wrap: balance;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: aliceblue;
+    text-align: center;
+    font-size: small;
 }
+
+.form-content h3, .form-content h5 {
+    margin: 0.5rem;
+}
+
 
 .form-content a:hover {
     text-shadow: 0px 0px 1px #75ff52;
@@ -524,7 +676,7 @@ li {
     justify-content: center;
 }
 
-#create-btn {
+#create-btn, #validate-btn {
     border-radius: 0.5rem;
     padding: 0.5rem;
     background-color: #723bb9;
@@ -534,7 +686,7 @@ li {
     font-weight: bold;
 }
 
-#create-btn:hover {
+#create-btn:hover, #validate-btn:hover {
     box-shadow: 0 0 0.2rem 0.2rem #48ff1b;
 }
 
@@ -552,11 +704,194 @@ li {
     box-shadow: 0 0 0.2rem 0.2rem #863aff;
 }
 
-.server-list-buttons button {
-    background-color:bisque;
-    color: #000000;
-    padding: 0.5rem;
+.message-info {
+    text-align: center;
+    color: aliceblue;
+    background-color: #363434a6;
+    padding: 1rem;
+}
 
+
+/*--------------PROFILE CSS---------------*/
+
+.main-profile {
+    display: flex;
+    padding: 1rem;
+    border: 0;
+    /* background-image: linear-gradient(rgba(140, 82, 255, 0.5), rgba(0, 0, 0, 0.5)); */
+    border-radius: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+#profile-bg {
+    display: grid;
+    gap: 1rem;
+    /* grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto); */
+    grid-template: 
+                "photo" auto
+                "btn1"
+                "info" auto
+                "btn2" auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-image: url(../assests/whatsapp-chat-iphone-wallpapers.jpg);
+    background-size: cover;
+    border-radius: inherit;
+    /* height:fit-content;
+    width:fit-content; */
+    padding: 1rem;
+    box-shadow: 0 0 3rem 0.5rem #8C52FF;
+}
+
+#profile-bg > span {
+    display: flex;
+    justify-content: center;
+}
+
+#profile-photo {
+    grid-area: photo;
+    background-image: url('../assests/profile-avatar.png');
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-size: cover;
+    border: 1rem #8C52FF solid;
+    border-radius: 10rem;
+    width: 12rem;
+    height: 12rem;
+}
+
+#info-content {
+    grid-area: info;
+    display: table;
+    padding: 1rem;
+    border: 0;
+    background-image: linear-gradient(rgba(0, 191, 99, 0.2), black);
+    border-radius: 1rem;
+    backdrop-filter: blur(5px);
+    height: max-content;
+    width: max-content;
+}
+
+table {
+    color: aliceblue;
+    border-spacing: 1rem;
+}
+
+#info-content img {
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-left: 0.5rem;
+}
+
+.edit, .password-reset {
+    display: block;
+    background-image: url('../assests/edit-white.png');
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-position: center;
+    background-size: cover;
+    height: 1.3rem;
+    width: 1.3rem;
+}
+
+.edit:hover, .password-reset:hover {
+    filter: drop-shadow(1px 1px 1px #00ff22);
+    background-image: url('../assests/edit-green.png');
+}
+
+.password-reset {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.password-reset:hover {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.container-btn {
+    grid-area: btn2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#update-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #0059ff;
+    font-size: large;
+    color: aliceblue;
+    width: 100%;
+    margin-right: 0.3rem;
+    display: flex;
+    justify-content: center;
+}
+
+#update-btn:hover:enabled {
+    background-color: #1418ff;
+    box-shadow: 0 0 0.5rem 0.3rem #fbff00;
+}
+
+#update-btn:disabled {
+    background-color: #727272;
+}
+
+#logout-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #8C52FF;
+    font-size: large;
+    color: aliceblue;
+    width: 100%;
+    margin-left: 0.3rem;
+}
+
+#logout-btn:hover {
+    background-color: #4f1eb3;
+    box-shadow: 0 0 0.5rem 0.3rem #09ff00;
+}
+
+#edit-btn {
+    grid-area: btn1;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #1cb91c;
+    font-size: large;
+    color: rgb(255, 255, 255);
+}
+
+#edit-btn:hover {
+    background-color: #007400;
+    box-shadow: 0 0 0.5rem 0.3rem #9a4cff;
+}
+
+input {
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    font-size: 1rem;
+}
+
+#image-preview {
+    width: 10rem;
+    height: 10rem;
+}
+
+#profile-container {
+    grid-area: app;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+    width: 100%;
+    height: 100%;
+}
+
+h3, h4, h5 {
+    color: lavender;
+    margin: 1rem;
+    text-align: center;
 }
 
 
@@ -588,6 +923,32 @@ li {
             "header header" max-content
             "navbar app" auto;
         grid-template-columns: 3rem auto;
+    }
+
+    #profile-bg {
+        grid-template: 
+            "photo info" auto
+            "btn1 btn2" auto;
+        background-image: url(../assests/whatsapp-chat-iphone-wallpapers-landscape.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: unset;
+        background-size: cover;
+    }
+    
+    #profile-bg > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #profile-photo {
+        width: 9.5rem;
+        height: 9.5rem;
+    }
+
+    .main-profile {
+        flex-direction: row-reverse;
     }
     
 }
