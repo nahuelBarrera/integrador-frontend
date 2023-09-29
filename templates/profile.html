@@ -17,45 +17,81 @@
     <nav class="navbar">
         <div class="expandable" id="menu">
             <ul>
-                <li>Explore</li>
-                <li>Servers</li>
-                <li>Direct Messages</li>
+                <li><a href="" title="Explore"><img src="../assests/server-explore-icon-white.png" alt="">Explore</a>
+                </li>
+                <!-- SHOULD ALLOW TO FIND ALL SERVERS IN DATABASE -->
+                <li><a href="" title="Servers"><img src="../assests/server-icon-white.png" alt="">Servers</a></li>
+                <!-- SHOULD SHOWS ALL SERVERS OF THE LOGIN USER
+                     ONCE A SERVER IS SELECTED IT SHOULD SHOW ALL ITS CHANNELS -->
+                <li><a href="chat.html" title="Direc Messages"><img src="../assests/message-white.png" alt="">Direct Messages</a>
+                </li>
+                <!-- SHOULD SHOW THE CHAT OF THE CHANNEL SELECTED-->
             </ul>
-            <form action="GET">
-                <input type="text" placeholder="Find servers" class="input-text">
-            </form>
+            <a href="../templates/profile.html" title="Account"><img src="../assests/user-white.png" alt="">Account</a>
         </div>
     </nav>
     <article class="main">
         <div id="profile-bg">
-            <span id="profile-photo">
+            <span>
+                <a href="#" id="profile-photo"></a>
             </span>
-            <span id="buttons">
-            </span>
-            <div id="info-content">
-                <p><strong>Username:</strong> <span id="username"></span></p>
-                <p><strong>Email:</strong> <span id="email"></span></p>
-                <p><strong>First Name:</strong> <span id="first_name"></span></p>
-                <p><strong>Last Name:</strong> <span id="last_name"></span></p>
+            <button id="edit-btn">Edit photo</button>
+            <div id="info-content" class="table">
+                <form method="PUT" id="update-form">
+                    <table>
+                        <tr>
+                            <td><span class=""> <strong>Username:</strong></span></td>
+                            <td><span id="username"></span></td>
+                            <td><a type="button" class="username edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Email:</strong></span></td>
+                            <td><span id="email"></span></td>
+                            <td><a type="button" class="email edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>First Name:</strong></span></td>
+                            <td><span id="first_name"></span></td>
+                            <td><a type="button" class="first_name edit " title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Last Name:</strong></span></td>
+                            <td><span id="last_name"></span></td>
+                            <td><a type="button" class="last_name edit" title="Edit"></a></td>
+                        </tr>
+                        <tr>
+                            <td><span class=""> <strong>Password:</strong></span></td>
+                            <td><span id="password"></span></td>
+                            <td><a type="button" class="password-reset" id='pass-btn' title="Edit"></a></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-            <button id="logout-btn"><strong>Logout</strong></button>
-            <button id="edit-btn"><strong>Edit</strong></button>
+            <div class="container-btn">
+                <input type="submit" form='update-form' id="update-btn" value="Update" disabled></input>
+                <button id="logout-btn"><strong>Logout</strong></button>
+            </div>
         </div>
     </article>
-    <script>
-        function animate_menu() {
-            elem = document.getElementsByClassName('navbar')[0];
-            icon = document.getElementsByClassName('menu-btn')[0];
-            if (elem.id == 'open') {
-                elem.id = '';
-                icon.id = ''; 
-            }
-            else {
-                elem.id = 'open';
-                icon.id = 'open-menu-btn';         
-            }
-        };
-    </script>
+    <div id="modal">
+        <span class="close-btn">
+          <button id="close-btn" onclick=close_modal() title="Close"></button>
+        </span>
+        <div id="form-container">
+          <!-- <span class="form-content">
+            <h3>Password validation</h3>
+            <h5>Please insert your current password:</h5>
+            <form method='GET' id="pass-form" name="pass">
+              <p><input class="input-pass" type="password" id="cur-pass" placeholder="current password" required></p>
+              <span>
+                <p><input type="submit" form="pass-form" name="pass-validate" id="validate-btn" value="Validate"></p>
+                <p><input type="reset" form="pass-form" name="pass-cancel" id="cancel-btn" value="Cancel"></p>
+              </span>
+            </form>
+          </span> -->
+        </div>
+      </div>
+    <script src="../scripts/profile.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../styles/chat.css">
+</head>
+
+<body class="grid-container">
+    <header class="header">
+        <button type="button" class="menu-btn" onclick="animate_menu()"></button>
+        <img src="../assests/chatify_logo_sm.png" alt="">
+    </header>
+    <nav class="navbar main" >
+        <div class="menu" id="main-nav">
+            <ul>
+                <li><a class="menu-a" tabindex="0" title="Explore" id="all-servers"><img class="icon-navbar" src="../assests/server-explore-icon-white.png" alt="">Explore</a></li>
+                <li><a class="menu-a" tabindex="0" title="Servers" id="user-servers"><img class="icon-navbar" src="../assests/server-icon-white.png" alt="">Servers</a></li>
+            </ul>
+            <a class="menu-a" tabindex="0" title="Account" id="account"><img class="icon-navbar" src="../assests/user-white.png" alt="">Account</a>
+        </div>
+    </nav>
+    <main class="app">
+    </main>
+    <div id="modal">
+        <span class="close-btn">
+          <button id="close-btn" onclick=close_modal() title="Close"></button>
+        </span>
+        <div id="form-container">
+        </div>
+    </div>
+    <script src="../scripts/chat.js"></script>
+    <script src="../scripts/profile.js"></script>
+</body>
+
+</html>

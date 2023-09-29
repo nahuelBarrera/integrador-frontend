@@ -1,0 +1,977 @@
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans&display=swap");
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: "Public Sans", sans-serif;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-image: url(../assests/background_default.png);
+    font-size: 1.2rem;
+    min-height: 100%;
+    padding-top: 4rem;
+}
+
+.grid-container header {
+    box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.header {
+    grid-area: header;
+    color: azure;
+    position: fixed;
+    width: 100%;
+    background-color: #36097e80;
+    border: #5221a0 2px solid;
+    border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    margin-top: -4rem;
+    z-index: 1;
+}
+
+.header a {
+    text-decoration: none;
+    color: aliceblue;
+    border: 1px solid;
+    border-radius: inherit;
+    padding: 0.2rem;
+}
+
+.header a:hover {
+    background-color: #2c9728;
+    box-shadow: 0 0 0.5rem 0.3rem #09ff00;
+}
+
+.header img {
+    width: 10rem;
+    height: 3rem;
+    border-radius: inherit;
+    border: 2px #48ff1b solid;
+}
+
+.menu-btn, .colapse-btn, .option-btn-icon {
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+    padding: 0.1rem;
+    border: none;
+}
+
+.menu-btn {
+    background-image: url('../assests/right-arrow-green.png');
+    width: 2rem;
+    height: 2rem;
+}
+
+.colapse-btn {
+    background-image: url('../assests/right-arrow-white.png');
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-right: 10rem;
+}
+
+.colapse-btn:hover {
+    background-image: url('../assests/right-arrow-purple.png');
+}
+
+.menu-btn:hover {
+    background-image: url('../assests/right-arrow-purple.png');
+    filter: drop-shadow(3px 3px 5px #000000);
+}
+
+#open-colapse-btn {
+    background-image: url('../assests/left-arrow-white.png');
+}
+
+#open-colapse-btn:hover {
+    background-image: url('../assests/left-arrow-purple.png');
+}
+
+#open-menu-btn {
+    background-image: url('../assests/left-arrow-green.png');
+}
+
+#open-menu-btn:hover {
+    background-image: url('../assests/left-arrow-purple.png');
+    filter: drop-shadow(3px 3px 5px #000000);
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: -1.8rem;
+    /* max-width: 39rem; */
+    position: relative;
+    /* left: 3rem; */
+}
+
+.navbar {
+    grid-template-columns: 0.4fr;
+    display: grid;
+    transition: grid-template-columns 200ms;
+    width: max-content;
+    height: 100%;
+    margin-top: 0;
+}
+
+.main {
+    grid-area: navbar;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+}
+
+.app {
+    grid-area: app;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.server-nav, .channel-nav {
+    grid-template-columns: 0.1fr;
+}
+
+
+#open {
+    grid-template-columns: 1fr;
+}
+
+.menu {
+    background-color: rgb(37, 37, 37, 0.5);
+    box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    margin-bottom: -1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    justify-content:space-between;
+    height: 100%;
+    padding: 1rem 0;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    
+}
+
+.menu p {
+    text-align: center;
+    margin: 0rem;
+}
+
+.p-title {
+    margin: 0;
+    max-width: 7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.list-container li {
+    margin-left: 0rem;
+    margin-right: -1rem;
+}
+
+#main-nav {
+    margin-right: -2rem;
+}
+
+.menu ul {
+    margin: 0 -1rem;
+}
+
+#account {
+    margin-bottom: 3rem;
+}
+
+/* #menu a {
+    background-color: #414141;
+    color: aliceblue;
+    text-align: start;
+} */
+
+.icon-navbar {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+}
+
+.menu-a {
+    background-color: rgba(65, 65, 65, 0.5);
+    text-align: start;
+    color: aliceblue;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.menu-a:hover {
+    background-color: #8C52FF;
+    color: aliceblue;
+}
+
+.menu-a:focus-within {
+    background-color: #8C52FF;
+}
+
+#chat-header {
+    display: flex;
+}
+
+#server-menu {
+    /* grid-area: servers; */
+    max-width: 28rem;
+}
+
+#channel-menu {
+    /* grid-area: channels; */
+    max-width: 28rem;
+}
+
+#server-menu, #channel-menu {
+    color: aliceblue;
+    grid-row: auto;
+    justify-content: start;
+    padding: 0;
+    min-width: 2.7rem;
+    
+}
+
+.list-container {
+    max-height: 100%;
+    position: unset;
+    padding-right: 1rem;
+}
+
+.option-btn-container {
+    display: block;
+    margin: 1rem 0;
+}
+
+.option-btn-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+#new-server {
+    background-image: url('../assests/server-add-icon-white.png');
+    
+}
+
+#search-server {
+    background-image: url('../assests/search-server-icon-white.png');
+}
+
+.option-btn-container span {
+    padding: 0.3rem;
+    display: inline-block;
+}
+
+.option-btn-container span:hover {
+    background-color: #8C52FF;
+}
+
+.option-btn-container {
+    text-align: start;
+    color: aliceblue;
+    text-decoration: none;
+    display: inline-block;
+    align-items: center;
+    padding: 0.3rem;
+    border: none;
+}
+
+/* .info-server:hover, .channels-server:hover, .chat-channel:hover {
+    background-color: #8C52FF;
+} */
+
+.info-server span, .channels-server span,
+.chat-channel span {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.info-server span, .channels-server span{
+    background-image: url('../assests/server-icon-white.png');
+}
+
+.server-list-buttons, .channel-list-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.list-container ul {
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    position: absolute;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    overflow-y: scroll;
+    display: contents;
+}
+
+#server-list::-webkit-scrollbar , #channel-list::-webkit-scrollbar {
+    display: none; 
+}
+
+.small-btn {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+.small-btn:hover {
+    background-color: #8C52FF;
+}
+
+.edit-server {
+    background-image: url('../assests/server-config-icon-white.png');
+}
+
+.delete-server {
+    background-image: url('../assests/server-delete-icon-white.png');
+}
+
+.join-server {
+    background-image: url('../assests/create-white.png');
+}
+
+.left-server {
+    background-image: url('../assests/delete-white.png');
+}
+
+.edit-channel {
+    background-image: url('../assests/edit-white.png');
+    margin-right: 0;
+}
+
+.delete-channel {
+    background-image: url('../assests/delete-white.png');
+    margin-right: 0;
+}
+
+.add-channel-btn {
+    background-image: url('../assests/create-white.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+}
+
+.chat-channel span {
+    background-image: url('../assests/message-white.png');
+}
+
+.chat {
+    margin-top: -1.8rem;
+    /* grid-area: chat; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* gap: 1rem;
+    grid-template:
+        "chat-header" auto
+        "chat-frame" auto
+        "typing-bar" auto; */
+    background-image: url('../assests/chat-wallpaper5.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    width: 100%;
+}
+
+#chat-header {
+    /* grid-area: chat-header; */
+    color: aliceblue;
+    background-color: #444444;
+    text-align: center;
+    height: max-content;
+    padding: 1rem;
+    width: 100%;
+}
+
+#chat-frame {
+    /* grid-area: chat-frame; */
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.list {
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column-reverse;
+    position: absolute;
+}
+
+#typing-bar {
+    /* grid-area: typing-bar; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444444;
+    height: max-content;
+    width: 100%;
+}
+
+#send, #update, #cancel-update {
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    background-image: url('../assests/send-message-white.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+#send:hover {
+    background-image: url('../assests/send-message.png');   
+}
+
+#update {
+    background-image: url('../assests/up-arrow-white.png');
+}
+
+#update:hover {
+    background-image: url('../assests/up-arrow-blue.png');
+}
+
+#cancel-update {
+    background-image: url('../assests/delete-button-white.png');
+}
+
+#cancel-update:hover {
+    background-image: url('../assests/delete-button-red.png');
+}
+
+#message-input {
+    border-radius: 1rem;
+    width: 100%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.msg-bubble {
+    background-color:  rgb(0 0 0 / 54%);
+    color: aliceblue;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.msg-bubble span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.msg-head {
+    justify-content: space-between;
+}
+
+.owner-bubble {
+    background-color: rgb(83 90 91 / 78%);
+}
+
+.owner-bubble h4 {
+    color: orange;
+}
+
+
+.edit-msg, .delete-msg {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    margin: 0.2rem;
+}
+
+.edit-msg {
+    height: 1.6rem;
+    width: 1.6rem;
+    background-image: url('../assests/edit-msg-white.png'); 
+}
+
+.edit-msg:hover {
+    background-image: url('../assests/edit-msg-green.png');
+}
+
+.delete-msg {
+    height: 1.32rem;
+    width: 1.32rem;
+    background-image: url('../assests/delete-button-white.png'); 
+}
+
+.delete-msg:hover {
+    background-image: url('../assests/delete-button-red.png');
+}
+
+.user, .content {
+    text-align: start;
+}
+
+.sub-info {
+    justify-content: end;
+    text-align: end;
+    font-size: 0.8rem;
+}
+
+.time {
+    margin-left: 1rem;
+}
+
+li {
+    list-style-type: none;
+    margin: 0 1rem;
+}
+
+.input-text, .input-pass {
+    border: 1px solid;
+    padding: 0.1rem;
+    border-radius: 0.2rem;
+    margin: 0.5rem;
+    background-color: #444444;
+    color: aliceblue;
+}
+
+::placeholder {
+    color: rgb(226, 226, 226);
+    font-size: 1.1rem;
+}
+
+.grid-container {
+    display: grid;
+    row-gap: 1rem;
+    grid-template:
+        "header header" max-content
+        "navbar app" auto;
+    grid-template-columns: 3rem auto;
+    width: 100%;
+}
+
+#modal {
+    display: none;
+}
+
+#open-modal {
+    display: grid;
+    grid-template:
+        "btn"
+        "form";
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin-top: -4rem;
+    animation-name: move-down;
+    animation-duration: 200ms;
+    animation-delay: 0ms;
+    animation-fill-mode:forwards;
+    z-index: 1;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.close-btn {
+    grid-area: btn;
+    display: flex;
+    justify-content: end;
+}
+
+#close-btn {
+    background-color: transparent;
+    border: none;
+    background-image: url('../assests/Close.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    width: 2rem;
+    height: 2rem;
+}
+
+#form-container {
+    grid-area: form;
+    display: flex;
+    justify-content: center;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 0;
+    background-image: linear-gradient(rgb(30, 172, 48), black);
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem 0.5rem #9d4edd;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+}
+
+.form-content p {
+    margin: 0rem;
+    max-width: 20rem;
+    text-wrap: balance;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: aliceblue;
+    text-align: center;
+    font-size: small;
+}
+
+.form-content h3, .form-content h5 {
+    margin: 0.5rem;
+}
+
+
+.form-content a:hover {
+    text-shadow: 0px 0px 1px #75ff52;
+}
+
+.form-content span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#create-btn, #validate-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #723bb9;
+    font-size: large;
+    color: rgb(255, 255, 255);
+    width: 100%;
+    font-weight: bold;
+}
+
+#create-btn:hover, #validate-btn:hover {
+    box-shadow: 0 0 0.2rem 0.2rem #48ff1b;
+}
+
+#cancel-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: large;
+    color: rgb(255, 255, 255);
+    background-color: #c00000;
+    width: 100%;
+    font-weight: bold;
+}
+
+#cancel-btn:hover {
+    box-shadow: 0 0 0.2rem 0.2rem #863aff;
+}
+
+.message-info {
+    text-align: center;
+    color: aliceblue;
+    background-color: #363434a6;
+    padding: 1rem;
+}
+
+
+/*--------------PROFILE CSS---------------*/
+
+.main-profile {
+    display: flex;
+    padding: 1rem;
+    border: 0;
+    /* background-image: linear-gradient(rgba(140, 82, 255, 0.5), rgba(0, 0, 0, 0.5)); */
+    border-radius: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+#profile-bg {
+    display: grid;
+    gap: 1rem;
+    /* grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto); */
+    grid-template: 
+                "photo" auto
+                "btn1"
+                "info" auto
+                "btn2" auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-image: url(../assests/whatsapp-chat-iphone-wallpapers.jpg);
+    background-size: cover;
+    border-radius: inherit;
+    /* height:fit-content;
+    width:fit-content; */
+    padding: 1rem;
+    box-shadow: 0 0 3rem 0.5rem #8C52FF;
+}
+
+#profile-bg > span {
+    display: flex;
+    justify-content: center;
+}
+
+#profile-photo {
+    grid-area: photo;
+    background-image: url('../assests/profile-avatar.png');
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-size: cover;
+    border: 1rem #8C52FF solid;
+    border-radius: 10rem;
+    width: 12rem;
+    height: 12rem;
+}
+
+#info-content {
+    grid-area: info;
+    display: table;
+    padding: 1rem;
+    border: 0;
+    background-image: linear-gradient(rgba(0, 191, 99, 0.2), black);
+    border-radius: 1rem;
+    backdrop-filter: blur(5px);
+    height: max-content;
+    width: max-content;
+}
+
+table {
+    color: aliceblue;
+    border-spacing: 1rem;
+}
+
+#info-content img {
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-left: 0.5rem;
+}
+
+.edit, .password-reset {
+    display: block;
+    background-image: url('../assests/edit-white.png');
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-position: center;
+    background-size: cover;
+    height: 1.3rem;
+    width: 1.3rem;
+}
+
+.edit:hover, .password-reset:hover {
+    filter: drop-shadow(1px 1px 1px #00ff22);
+    background-image: url('../assests/edit-green.png');
+}
+
+.password-reset {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.password-reset:hover {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.container-btn {
+    grid-area: btn2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#update-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #0059ff;
+    font-size: large;
+    color: aliceblue;
+    width: 100%;
+    margin-right: 0.3rem;
+    display: flex;
+    justify-content: center;
+}
+
+#update-btn:hover:enabled {
+    background-color: #1418ff;
+    box-shadow: 0 0 0.5rem 0.3rem #fbff00;
+}
+
+#update-btn:disabled {
+    background-color: #727272;
+}
+
+#logout-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #8C52FF;
+    font-size: large;
+    color: aliceblue;
+    width: 100%;
+    margin-left: 0.3rem;
+}
+
+#logout-btn:hover {
+    background-color: #4f1eb3;
+    box-shadow: 0 0 0.5rem 0.3rem #09ff00;
+}
+
+#edit-btn {
+    grid-area: btn1;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #1cb91c;
+    font-size: large;
+    color: rgb(255, 255, 255);
+}
+
+#edit-btn:hover {
+    background-color: #007400;
+    box-shadow: 0 0 0.5rem 0.3rem #9a4cff;
+}
+
+input {
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    font-size: 1rem;
+}
+
+#image-preview {
+    width: 10rem;
+    height: 10rem;
+}
+
+#profile-container {
+    grid-area: app;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+    width: 100%;
+    height: 100%;
+}
+
+h3, h4, h5 {
+    color: lavender;
+    margin: 1rem;
+    text-align: center;
+}
+
+
+@keyframes move-down {
+    0%{
+        transform: translateY(-100%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+
+@keyframes move-up {
+    0%{
+        transform: translateY(0%);
+    }
+    100%{
+        transform: translateY(-100%);
+    }
+}
+
+@media (min-width: 600px) {
+    html {
+        font-size: 13px;
+    }
+
+    .grid-container {
+        grid-template:
+            "header header" max-content
+            "navbar app" auto;
+        grid-template-columns: 3rem auto;
+    }
+
+    #profile-bg {
+        grid-template: 
+            "photo info" auto
+            "btn1 btn2" auto;
+        background-image: url(../assests/whatsapp-chat-iphone-wallpapers-landscape.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: unset;
+        background-size: cover;
+    }
+    
+    #profile-bg > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #profile-photo {
+        width: 9.5rem;
+        height: 9.5rem;
+    }
+
+    .main-profile {
+        flex-direction: row-reverse;
+    }
+    
+}
+
+@media (min-width: 650px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 900px) {
+    html {
+        font-size: 16px;
+    }
+}
+@media (min-width: 1200px) {
+    html {
+        font-size: 17px;
+    }
+}

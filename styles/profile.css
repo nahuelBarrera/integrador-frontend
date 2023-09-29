@@ -22,10 +22,10 @@ body {
     padding-top: 4rem;
 }
 
-.grid-container>* {
+.grid-container header {
     box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
     border-radius: 4px;
-    padding: 10px;
     text-align: center;
 }
 
@@ -33,7 +33,7 @@ body {
     grid-area: header;
     color: azure;
     position: fixed;
-    width: -webkit-fill-available;
+    width: 100%;
     background-color: #36097e80;
     border: #5221a0 2px solid;
     border-radius: 0.3rem;
@@ -42,6 +42,7 @@ body {
     justify-content: space-between;
     padding: 0 1rem;
     margin-top: -4rem;
+    z-index: 1;
 }
 
 .header a {
@@ -94,11 +95,12 @@ body {
     position: fixed;
     display: grid;
     margin-top: -0.75rem;
-    grid-template-columns: 0fr;
+    grid-template-columns:  0.48fr;
     transition: grid-template-columns 200ms;
     width: max-content;
-    height: -webkit-fill-available;
-    padding: 0;
+    height: 100%;
+    padding-bottom: 3rem;
+    z-index: 1;
 }
 
 .navbar#open {
@@ -106,16 +108,19 @@ body {
 }
 
 #menu {
-    background-color: rgb(37, 37, 37);
+    background-color: rgb(37, 37, 37, 0.5);
+    box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
     margin-bottom: -1rem;
     display: flex;
     flex-direction: column;
     align-items: inherit;
     justify-content:space-between;
-    height: auto;
+    height: 100%;
     padding: 1rem 0;
     min-width: 0;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 #menu ul {
@@ -124,14 +129,23 @@ body {
 
 }
 
-#menu ul li {
-    padding: 0.5rem;
-    background-color: #414141;
-    color: aliceblue;
-    text-align: start;
+#menu img {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
 }
 
-#menu ul li:hover {
+#menu a {
+    background-color: rgba(65, 65, 65, 0.5);
+    text-align: start;
+    color: aliceblue;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+#menu a:hover {
     background-color: #8C52FF;
     color: aliceblue;
 }
@@ -150,15 +164,17 @@ body {
 #profile-bg {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto);
-    grid-template-areas: "photo photo"
-                         "info info"
-                         "btn1 btn2";
+    /* grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto); */
+    grid-template: 
+                "photo" auto
+                "btn1"
+                "info" auto
+                "btn2" auto;
     background-position: top center;
     background-repeat: no-repeat;
     background-attachment: unset;
-    background-image: url(../assests/profil-picture-portrait.png);
+    background-image: url(../assests/whatsapp-chat-iphone-wallpapers.jpg);
     background-size: cover;
     border-radius: inherit;
     /* height:fit-content;
@@ -167,38 +183,106 @@ body {
     box-shadow: 0 0 3rem 0.5rem #8C52FF;
 }
 
+#profile-bg > span {
+    display: flex;
+    justify-content: center;
+}
+
 #profile-photo {
-    width: 10rem;
-    height: 10rem;
+    grid-area: photo;
+    background-image: url('../assests/profile-avatar.png');
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-size: cover;
+    border: 1rem #8C52FF solid;
+    border-radius: 10rem;
+    width: 12rem;
+    height: 12rem;
 }
 
 #info-content {
     grid-area: info;
-    display: flex;
-    flex-direction: column;
+    display: table;
     padding: 1rem;
     border: 0;
-    background-image: linear-gradient(rgba(0, 191, 99, 0.5), black);
+    background-image: linear-gradient(rgba(0, 191, 99, 0.2), black);
     border-radius: 1rem;
-    justify-content: center;
-    align-items:start;
+    backdrop-filter: blur(5px);
     height: max-content;
+    width: max-content;
 }
 
+table {
+    color: aliceblue;
+    border-spacing: 1rem;
+}
 
-#info-content p {
-    color: azure;
-    margin: 0.5rem 0;
+#info-content img {
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-left: 0.5rem;
+}
+
+.edit, .password-reset {
+    display: block;
+    background-image: url('../assests/edit-white.png');
+    background-repeat: no-repeat;
+    background-attachment: unset;
+    background-position: center;
+    background-size: cover;
+    height: 1.3rem;
+    width: 1.3rem;
+}
+
+.edit:hover, .password-reset:hover {
+    filter: drop-shadow(1px 1px 1px #00ff22);
+    background-image: url('../assests/edit-green.png');
+}
+
+.password-reset {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.password-reset:hover {
+    background-image: url("../assests/reset-password-white.png");
+}
+
+.container-btn {
+    grid-area: btn2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#update-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #0059ff;
+    font-size: large;
+    color: aliceblue;
+    width: 100%;
+    margin-right: 0.3rem;
+    display: flex;
+    justify-content: center;
+}
+
+#update-btn:hover:enabled {
+    background-color: #1418ff;
+    box-shadow: 0 0 0.5rem 0.3rem #fbff00;
+}
+
+#update-btn:disabled {
+    background-color: #727272;
 }
 
 #logout-btn {
-    grid-area: btn2;
     border-radius: 0.5rem;
     padding: 0.5rem;
     background-color: #8C52FF;
     font-size: large;
-    /* width: -webkit-fill-available; */
     color: aliceblue;
+    width: 100%;
+    margin-left: 0.3rem;
 }
 
 #logout-btn:hover {
@@ -220,28 +304,27 @@ body {
     box-shadow: 0 0 0.5rem 0.3rem #9a4cff;
 }
 
-/* .footer {
-    grid-area: footer;
-    background-color: #8c96a0;
-} */
-
 li {
     list-style-type: none;
     margin: 0 1rem;
 }
 
-.input-text {
+::placeholder {
+    color: rgb(226, 226, 226);
+    font-size: 1.1rem;
+}
+
+.input-text, .input-pass {
     border: 1px solid;
-    padding: 0.1rem;
-    border-radius: 0.2rem;
-    margin: 0.5rem;
+    /* width: 100%; */
     background-color: #444444;
     color: aliceblue;
 }
 
-::placeholder {
-    color: rgb(226, 226, 226);
-    font-size: 1.1rem;
+input {
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    font-size: 1rem;
 }
 
 .grid-container {
@@ -250,6 +333,138 @@ li {
     grid-template:
         "header header" max-content
         "navbar main" auto;
+}
+
+h3, h5 {
+    color: lavender;
+    margin: 1rem;
+    text-align: center;
+}
+
+#modal {
+    display: none;
+}
+
+#open-modal {
+    display: grid;
+    grid-template:
+        "btn"
+        "form";
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin-top: -4rem;
+    animation-name: move-down;
+    animation-duration: 200ms;
+    animation-delay: 0ms;
+    animation-fill-mode:forwards;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.close-btn {
+    grid-area: btn;
+    display: flex;
+    justify-content: end;
+}
+
+#close-btn {
+    background-color: transparent;
+    border: none;
+    background-image: url('../assests/Close.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: unset;
+    width: 2rem;
+    height: 2rem;
+}
+
+#form-container {
+    grid-area: form;
+    display: flex;
+    justify-content: center;
+}
+
+#image-preview {
+    width: 10rem;
+    height: 10rem;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 0;
+    background-image: linear-gradient(rgb(30, 172, 48), black);
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem 0.5rem #9d4edd;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+}
+
+.form-content p {
+    margin: 1rem;
+}
+
+.form-content a:hover {
+    text-shadow: 0px 0px 1px #75ff52;
+}
+
+.form-content span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#validate-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #723bb9;
+    font-size: large;
+    color: rgb(255, 255, 255);
+    width: 100%;
+    font-weight: bold;
+}
+
+#validate-btn:hover {
+    box-shadow: 0 0 0.2rem 0.2rem #48ff1b;
+}
+
+#cancel-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: large;
+    color: rgb(255, 255, 255);
+    background-color: #c00000;
+    width: 100%;
+    font-weight: bold;
+}
+
+#cancel-btn:hover {
+    box-shadow: 0 0 0.2rem 0.2rem #863aff;
+}
+
+
+@keyframes move-down {
+    0%{
+        transform: translateY(-100%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+
+@keyframes move-up {
+    0%{
+        transform: translateY(0%);
+    }
+    100%{
+        transform: translateY(-100%);
+    }
 }
 
 @media (min-width: 600px) {
@@ -273,15 +488,28 @@ li {
         
     }
 
-    #logo {
-        content: url('../assests/chatify_logo_lg.png');
-        border-radius: 1rem;
-        width: 20rem;
-        height: 20rem;
-        margin-left: 0.5rem;
-        box-shadow: 0 0 1rem 0.5rem #48ff1b;
+    #profile-bg {
+        grid-template: 
+            "photo info" auto
+            "btn1 btn2" auto;
+        background-image: url(../assests/whatsapp-chat-iphone-wallpapers-landscape.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: unset;
+        background-size: cover;
     }
     
+    #profile-bg > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #profile-photo {
+        width: 9.5rem;
+        height: 9.5rem;
+    }
+
     .main {
         flex-direction: row-reverse;
     }
